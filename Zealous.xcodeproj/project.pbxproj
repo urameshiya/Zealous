@@ -13,6 +13,7 @@
 		F051E7AC24B6375700CCD591 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08FF17824A3982800A29C71 /* ContentView.swift */; };
 		F051E7AE24B7DDD500CCD591 /* SwiftUI+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F051E7AD24B7DDD400CCD591 /* SwiftUI+Ext.swift */; };
 		F051E7B024B8C0F100CCD591 /* SongPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F051E7AF24B8C0F100CCD591 /* SongPlayer.swift */; };
+		F08EC31024BD219C000DCA32 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = F08EC30F24BD219B000DCA32 /* .gitignore */; };
 		F08FF17724A3982800A29C71 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08FF17624A3982800A29C71 /* AppDelegate.swift */; };
 		F08FF17B24A3982D00A29C71 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F08FF17A24A3982D00A29C71 /* Assets.xcassets */; };
 		F08FF17E24A3982D00A29C71 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F08FF17D24A3982D00A29C71 /* Preview Assets.xcassets */; };
@@ -48,6 +49,7 @@
 		F051E7AA24B3C76D00CCD591 /* AudioBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioBarView.swift; sourceTree = "<group>"; };
 		F051E7AD24B7DDD400CCD591 /* SwiftUI+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Ext.swift"; sourceTree = "<group>"; };
 		F051E7AF24B8C0F100CCD591 /* SongPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongPlayer.swift; sourceTree = "<group>"; };
+		F08EC30F24BD219B000DCA32 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		F08FF17324A3982800A29C71 /* Zealous.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zealous.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F08FF17624A3982800A29C71 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F08FF17824A3982800A29C71 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 		F08FF16A24A3982800A29C71 = {
 			isa = PBXGroup;
 			children = (
+				F08EC30F24BD219B000DCA32 /* .gitignore */,
 				F08FF17524A3982800A29C71 /* Zealous */,
 				F08FF19724A4255B00A29C71 /* ZealousTests */,
 				F08FF17424A3982800A29C71 /* Products */,
@@ -270,6 +273,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F08EC31024BD219C000DCA32 /* .gitignore in Resources */,
 				F08FF18124A3982D00A29C71 /* Main.storyboard in Resources */,
 				F08FF17E24A3982D00A29C71 /* Preview Assets.xcassets in Resources */,
 				F08FF17B24A3982D00A29C71 /* Assets.xcassets in Resources */,
