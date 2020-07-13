@@ -23,17 +23,21 @@ struct Marker: View {
 
 struct Caret: View {
 	var axis: Axis
+	var geo: GeometryProxy
+	@ObservedObject var player: SongPlayer
 	
 	var body: some View {
 		Rectangle()
 			.foregroundColor(Color.black)
 			.frame(axis: self.axis, majorLength: 1)
+			.offset(geo.length(along: self.axis) * CGFloat(self.player.fractionElapsed),
+					along: self.axis)
 	}
 }
 
 struct Bar: View {
 	var axis: Axis
-	@ObservedObject var player: SongPlayer
+	var player: SongPlayer
 	@State var selectedMarker: Int = -1
 	var markerFractions: [CGFloat]
 	
@@ -46,9 +50,7 @@ struct Bar: View {
 					Marker(axis: self.axis)
 						.offset(geo.length(along: self.axis) * fraction, along: self.axis)
 				}
-				Caret(axis: self.axis)
-					.offset(geo.length(along: self.axis) * CGFloat(self.player.fractionElapsed),
-							along: self.axis)
+				Caret(axis: self.axis, geo: geo, player: self.player)
 			}
 		}
 	}

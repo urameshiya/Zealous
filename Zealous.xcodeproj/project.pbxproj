@@ -1,0 +1,579 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F051E7A424B134E000CCD591 /* ColorAlternator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F051E7A324B134E000CCD591 /* ColorAlternator.swift */; };
+		F051E7A924B35F0600CCD591 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F051E7A824B35F0600CCD591 /* MainViewController.swift */; };
+		F051E7AB24B3C76D00CCD591 /* AudioBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F051E7AA24B3C76D00CCD591 /* AudioBarView.swift */; };
+		F051E7AC24B6375700CCD591 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08FF17824A3982800A29C71 /* ContentView.swift */; };
+		F051E7AE24B7DDD500CCD591 /* SwiftUI+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F051E7AD24B7DDD400CCD591 /* SwiftUI+Ext.swift */; };
+		F051E7B024B8C0F100CCD591 /* SongPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F051E7AF24B8C0F100CCD591 /* SongPlayer.swift */; };
+		F08FF17724A3982800A29C71 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08FF17624A3982800A29C71 /* AppDelegate.swift */; };
+		F08FF17B24A3982D00A29C71 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F08FF17A24A3982D00A29C71 /* Assets.xcassets */; };
+		F08FF17E24A3982D00A29C71 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F08FF17D24A3982D00A29C71 /* Preview Assets.xcassets */; };
+		F08FF18124A3982D00A29C71 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F08FF17F24A3982D00A29C71 /* Main.storyboard */; };
+		F08FF18A24A3A05200A29C71 /* Lyrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08FF18924A3A05200A29C71 /* Lyrics.swift */; };
+		F08FF18E24A3C0D200A29C71 /* EncoderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08FF18D24A3C0D200A29C71 /* EncoderViewController.swift */; };
+		F08FF19924A4255B00A29C71 /* ZealousTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08FF19824A4255B00A29C71 /* ZealousTests.swift */; };
+		F08FF1A024A4256500A29C71 /* LyricSeparatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08FF19024A4252500A29C71 /* LyricSeparatorTest.swift */; };
+		F08FF1A124A4257C00A29C71 /* Lyrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08FF18924A3A05200A29C71 /* Lyrics.swift */; };
+		F08FF1A524A5407900A29C71 /* Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08FF1A424A5407900A29C71 /* Tree.swift */; };
+		F08FF1A724A566EF00A29C71 /* TreeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08FF1A624A566EF00A29C71 /* TreeTest.swift */; };
+		F08FF1A824A5676500A29C71 /* Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08FF1A424A5407900A29C71 /* Tree.swift */; };
+		F0A981C624BB242E00F229AC /* LyricExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A981C524BB242D00F229AC /* LyricExporter.swift */; };
+		F0A981C824BB54BA00F229AC /* KeyboardControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A981C724BB54BA00F229AC /* KeyboardControl.swift */; };
+		F0A981CA24BB8A8B00F229AC /* iTunes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A981C924BB8A8B00F229AC /* iTunes.swift */; };
+		F0A981CF24BBBC5300F229AC /* SongSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A981CE24BBBC5300F229AC /* SongSelectionView.swift */; };
+		F0AAB04224BCC16E00FAC35F /* SongMarkingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0AAB04124BCC16E00FAC35F /* SongMarkingController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F08FF19B24A4255B00A29C71 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F08FF16B24A3982800A29C71 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F08FF17224A3982800A29C71;
+			remoteInfo = Zealous;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		F051E7A324B134E000CCD591 /* ColorAlternator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorAlternator.swift; sourceTree = "<group>"; };
+		F051E7A824B35F0600CCD591 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		F051E7AA24B3C76D00CCD591 /* AudioBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioBarView.swift; sourceTree = "<group>"; };
+		F051E7AD24B7DDD400CCD591 /* SwiftUI+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Ext.swift"; sourceTree = "<group>"; };
+		F051E7AF24B8C0F100CCD591 /* SongPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongPlayer.swift; sourceTree = "<group>"; };
+		F08FF17324A3982800A29C71 /* Zealous.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zealous.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F08FF17624A3982800A29C71 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F08FF17824A3982800A29C71 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		F08FF17A24A3982D00A29C71 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F08FF17D24A3982D00A29C71 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		F08FF18024A3982D00A29C71 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F08FF18224A3982D00A29C71 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F08FF18324A3982D00A29C71 /* Zealous.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Zealous.entitlements; sourceTree = "<group>"; };
+		F08FF18924A3A05200A29C71 /* Lyrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lyrics.swift; sourceTree = "<group>"; };
+		F08FF18D24A3C0D200A29C71 /* EncoderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncoderViewController.swift; sourceTree = "<group>"; };
+		F08FF19024A4252500A29C71 /* LyricSeparatorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricSeparatorTest.swift; sourceTree = "<group>"; };
+		F08FF19624A4255B00A29C71 /* ZealousTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZealousTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F08FF19824A4255B00A29C71 /* ZealousTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZealousTests.swift; sourceTree = "<group>"; };
+		F08FF19A24A4255B00A29C71 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F08FF1A424A5407900A29C71 /* Tree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tree.swift; sourceTree = "<group>"; };
+		F08FF1A624A566EF00A29C71 /* TreeTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeTest.swift; sourceTree = "<group>"; };
+		F0A981C524BB242D00F229AC /* LyricExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricExporter.swift; sourceTree = "<group>"; };
+		F0A981C724BB54BA00F229AC /* KeyboardControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardControl.swift; sourceTree = "<group>"; };
+		F0A981C924BB8A8B00F229AC /* iTunes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTunes.swift; sourceTree = "<group>"; };
+		F0A981CC24BB8A9E00F229AC /* iTunes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iTunes.h; sourceTree = "<group>"; };
+		F0A981CD24BB8AAA00F229AC /* Zealous-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Zealous-Bridging-Header.h"; sourceTree = "<group>"; };
+		F0A981CE24BBBC5300F229AC /* SongSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongSelectionView.swift; sourceTree = "<group>"; };
+		F0AAB04124BCC16E00FAC35F /* SongMarkingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongMarkingController.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F08FF17024A3982800A29C71 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F08FF19324A4255B00A29C71 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F051E7B124BB208A00CCD591 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				F051E7AD24B7DDD400CCD591 /* SwiftUI+Ext.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		F08FF16A24A3982800A29C71 = {
+			isa = PBXGroup;
+			children = (
+				F08FF17524A3982800A29C71 /* Zealous */,
+				F08FF19724A4255B00A29C71 /* ZealousTests */,
+				F08FF17424A3982800A29C71 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F08FF17424A3982800A29C71 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F08FF17324A3982800A29C71 /* Zealous.app */,
+				F08FF19624A4255B00A29C71 /* ZealousTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F08FF17524A3982800A29C71 /* Zealous */ = {
+			isa = PBXGroup;
+			children = (
+				F08FF17624A3982800A29C71 /* AppDelegate.swift */,
+				F08FF18924A3A05200A29C71 /* Lyrics.swift */,
+				F08FF1A424A5407900A29C71 /* Tree.swift */,
+				F08FF18F24A424FC00A29C71 /* Tests */,
+				F08FF18D24A3C0D200A29C71 /* EncoderViewController.swift */,
+				F051E7AF24B8C0F100CCD591 /* SongPlayer.swift */,
+				F0A981D024BBBC7D00F229AC /* SwiftUI */,
+				F051E7B124BB208A00CCD591 /* Extensions */,
+				F051E7A824B35F0600CCD591 /* MainViewController.swift */,
+				F0AAB04124BCC16E00FAC35F /* SongMarkingController.swift */,
+				F0A981CB24BB8A9000F229AC /* iTunes */,
+				F0A981C724BB54BA00F229AC /* KeyboardControl.swift */,
+				F0A981C524BB242D00F229AC /* LyricExporter.swift */,
+				F051E7A324B134E000CCD591 /* ColorAlternator.swift */,
+				F08FF17824A3982800A29C71 /* ContentView.swift */,
+				F08FF17A24A3982D00A29C71 /* Assets.xcassets */,
+				F08FF17F24A3982D00A29C71 /* Main.storyboard */,
+				F08FF18224A3982D00A29C71 /* Info.plist */,
+				F08FF18324A3982D00A29C71 /* Zealous.entitlements */,
+				F08FF17C24A3982D00A29C71 /* Preview Content */,
+			);
+			path = Zealous;
+			sourceTree = "<group>";
+		};
+		F08FF17C24A3982D00A29C71 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				F08FF17D24A3982D00A29C71 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		F08FF18F24A424FC00A29C71 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				F08FF19024A4252500A29C71 /* LyricSeparatorTest.swift */,
+				F08FF1A624A566EF00A29C71 /* TreeTest.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		F08FF19724A4255B00A29C71 /* ZealousTests */ = {
+			isa = PBXGroup;
+			children = (
+				F08FF19824A4255B00A29C71 /* ZealousTests.swift */,
+				F08FF19A24A4255B00A29C71 /* Info.plist */,
+			);
+			path = ZealousTests;
+			sourceTree = "<group>";
+		};
+		F0A981CB24BB8A9000F229AC /* iTunes */ = {
+			isa = PBXGroup;
+			children = (
+				F0A981CC24BB8A9E00F229AC /* iTunes.h */,
+				F0A981CD24BB8AAA00F229AC /* Zealous-Bridging-Header.h */,
+				F0A981C924BB8A8B00F229AC /* iTunes.swift */,
+			);
+			path = iTunes;
+			sourceTree = "<group>";
+		};
+		F0A981D024BBBC7D00F229AC /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				F051E7AA24B3C76D00CCD591 /* AudioBarView.swift */,
+				F0A981CE24BBBC5300F229AC /* SongSelectionView.swift */,
+			);
+			path = SwiftUI;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F08FF17224A3982800A29C71 /* Zealous */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F08FF18624A3982D00A29C71 /* Build configuration list for PBXNativeTarget "Zealous" */;
+			buildPhases = (
+				F08FF16F24A3982800A29C71 /* Sources */,
+				F08FF17024A3982800A29C71 /* Frameworks */,
+				F08FF17124A3982800A29C71 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Zealous;
+			productName = Zealous;
+			productReference = F08FF17324A3982800A29C71 /* Zealous.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F08FF19524A4255B00A29C71 /* ZealousTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F08FF19D24A4255B00A29C71 /* Build configuration list for PBXNativeTarget "ZealousTests" */;
+			buildPhases = (
+				F08FF19224A4255B00A29C71 /* Sources */,
+				F08FF19324A4255B00A29C71 /* Frameworks */,
+				F08FF19424A4255B00A29C71 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F08FF19C24A4255B00A29C71 /* PBXTargetDependency */,
+			);
+			name = ZealousTests;
+			productName = ZealousTests;
+			productReference = F08FF19624A4255B00A29C71 /* ZealousTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F08FF16B24A3982800A29C71 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1140;
+				LastUpgradeCheck = 1140;
+				ORGANIZATIONNAME = urameshiyaa;
+				TargetAttributes = {
+					F08FF17224A3982800A29C71 = {
+						CreatedOnToolsVersion = 11.4;
+					};
+					F08FF19524A4255B00A29C71 = {
+						CreatedOnToolsVersion = 11.4;
+						TestTargetID = F08FF17224A3982800A29C71;
+					};
+				};
+			};
+			buildConfigurationList = F08FF16E24A3982800A29C71 /* Build configuration list for PBXProject "Zealous" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F08FF16A24A3982800A29C71;
+			productRefGroup = F08FF17424A3982800A29C71 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F08FF17224A3982800A29C71 /* Zealous */,
+				F08FF19524A4255B00A29C71 /* ZealousTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F08FF17124A3982800A29C71 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F08FF18124A3982D00A29C71 /* Main.storyboard in Resources */,
+				F08FF17E24A3982D00A29C71 /* Preview Assets.xcassets in Resources */,
+				F08FF17B24A3982D00A29C71 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F08FF19424A4255B00A29C71 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F08FF16F24A3982800A29C71 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F051E7A924B35F0600CCD591 /* MainViewController.swift in Sources */,
+				F0A981CA24BB8A8B00F229AC /* iTunes.swift in Sources */,
+				F051E7B024B8C0F100CCD591 /* SongPlayer.swift in Sources */,
+				F08FF18A24A3A05200A29C71 /* Lyrics.swift in Sources */,
+				F051E7AE24B7DDD500CCD591 /* SwiftUI+Ext.swift in Sources */,
+				F051E7AB24B3C76D00CCD591 /* AudioBarView.swift in Sources */,
+				F08FF1A524A5407900A29C71 /* Tree.swift in Sources */,
+				F051E7AC24B6375700CCD591 /* ContentView.swift in Sources */,
+				F08FF17724A3982800A29C71 /* AppDelegate.swift in Sources */,
+				F08FF18E24A3C0D200A29C71 /* EncoderViewController.swift in Sources */,
+				F0A981C824BB54BA00F229AC /* KeyboardControl.swift in Sources */,
+				F0A981CF24BBBC5300F229AC /* SongSelectionView.swift in Sources */,
+				F0A981C624BB242E00F229AC /* LyricExporter.swift in Sources */,
+				F051E7A424B134E000CCD591 /* ColorAlternator.swift in Sources */,
+				F0AAB04224BCC16E00FAC35F /* SongMarkingController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F08FF19224A4255B00A29C71 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F08FF1A824A5676500A29C71 /* Tree.swift in Sources */,
+				F08FF1A124A4257C00A29C71 /* Lyrics.swift in Sources */,
+				F08FF1A724A566EF00A29C71 /* TreeTest.swift in Sources */,
+				F08FF19924A4255B00A29C71 /* ZealousTests.swift in Sources */,
+				F08FF1A024A4256500A29C71 /* LyricSeparatorTest.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F08FF19C24A4255B00A29C71 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F08FF17224A3982800A29C71 /* Zealous */;
+			targetProxy = F08FF19B24A4255B00A29C71 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		F08FF17F24A3982D00A29C71 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F08FF18024A3982D00A29C71 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F08FF18424A3982D00A29C71 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "Zealous/iTunes/Zealous-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		F08FF18524A3982D00A29C71 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OBJC_BRIDGING_HEADER = "Zealous/iTunes/Zealous-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		F08FF18724A3982D00A29C71 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Zealous/Zealous.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_ASSET_PATHS = "\"Zealous/Preview Content\"";
+				DEVELOPMENT_TEAM = R9LQGX392G;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Zealous/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = zzz.urameshiyaa.Zealous;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		F08FF18824A3982D00A29C71 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Zealous/Zealous.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_ASSET_PATHS = "\"Zealous/Preview Content\"";
+				DEVELOPMENT_TEAM = R9LQGX392G;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Zealous/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = zzz.urameshiyaa.Zealous;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		F08FF19E24A4255B00A29C71 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = R9LQGX392G;
+				INFOPLIST_FILE = ZealousTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = zzz.urameshiyaa.ZealousTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Zealous.app/Contents/MacOS/Zealous";
+			};
+			name = Debug;
+		};
+		F08FF19F24A4255B00A29C71 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = R9LQGX392G;
+				INFOPLIST_FILE = ZealousTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = zzz.urameshiyaa.ZealousTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Zealous.app/Contents/MacOS/Zealous";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F08FF16E24A3982800A29C71 /* Build configuration list for PBXProject "Zealous" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F08FF18424A3982D00A29C71 /* Debug */,
+				F08FF18524A3982D00A29C71 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F08FF18624A3982D00A29C71 /* Build configuration list for PBXNativeTarget "Zealous" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F08FF18724A3982D00A29C71 /* Debug */,
+				F08FF18824A3982D00A29C71 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F08FF19D24A4255B00A29C71 /* Build configuration list for PBXNativeTarget "ZealousTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F08FF19E24A4255B00A29C71 /* Debug */,
+				F08FF19F24A4255B00A29C71 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F08FF16B24A3982800A29C71 /* Project object */;
+}
