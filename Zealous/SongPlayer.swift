@@ -13,7 +13,7 @@ protocol SongPlayerDelegate: class {
 }
 
 final class SongPlayer: NSObject, ObservableObject {
-	@Published private var timeElapsed: Double = 0
+	@Published private(set) var timeElapsed: Double = 0
 	private(set) var duration: Double = .infinity
 	var fractionElapsed: Double {
 		return timeElapsed / duration
@@ -30,6 +30,10 @@ final class SongPlayer: NSObject, ObservableObject {
 													   queue: nil) { [weak self] timeElapsed in
 			self?.timeElapsed = CMTimeGetSeconds(timeElapsed)
 		}
+	}
+	
+	func seek(to time: CGFloat) {
+		player.seek(to: .init(seconds: Double(time), preferredTimescale: 1))
 	}
 	
 	func loadSong(from url: URL) {

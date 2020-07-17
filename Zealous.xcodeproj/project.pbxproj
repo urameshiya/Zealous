@@ -14,12 +14,13 @@
 		F051E7AE24B7DDD500CCD591 /* SwiftUI+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F051E7AD24B7DDD400CCD591 /* SwiftUI+Ext.swift */; };
 		F051E7B024B8C0F100CCD591 /* SongPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F051E7AF24B8C0F100CCD591 /* SongPlayer.swift */; };
 		F08EC31024BD219C000DCA32 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = F08EC30F24BD219B000DCA32 /* .gitignore */; };
+		F08EC31224C05321000DCA32 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08EC31124C05321000DCA32 /* String.swift */; };
 		F08FF17724A3982800A29C71 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08FF17624A3982800A29C71 /* AppDelegate.swift */; };
 		F08FF17B24A3982D00A29C71 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F08FF17A24A3982D00A29C71 /* Assets.xcassets */; };
 		F08FF17E24A3982D00A29C71 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F08FF17D24A3982D00A29C71 /* Preview Assets.xcassets */; };
 		F08FF18124A3982D00A29C71 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F08FF17F24A3982D00A29C71 /* Main.storyboard */; };
 		F08FF18A24A3A05200A29C71 /* Lyrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08FF18924A3A05200A29C71 /* Lyrics.swift */; };
-		F08FF18E24A3C0D200A29C71 /* EncoderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08FF18D24A3C0D200A29C71 /* EncoderViewController.swift */; };
+		F08FF18E24A3C0D200A29C71 /* LyricMarkingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08FF18D24A3C0D200A29C71 /* LyricMarkingView.swift */; };
 		F08FF19924A4255B00A29C71 /* ZealousTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08FF19824A4255B00A29C71 /* ZealousTests.swift */; };
 		F08FF1A024A4256500A29C71 /* LyricSeparatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08FF19024A4252500A29C71 /* LyricSeparatorTest.swift */; };
 		F08FF1A124A4257C00A29C71 /* Lyrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08FF18924A3A05200A29C71 /* Lyrics.swift */; };
@@ -50,6 +51,7 @@
 		F051E7AD24B7DDD400CCD591 /* SwiftUI+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Ext.swift"; sourceTree = "<group>"; };
 		F051E7AF24B8C0F100CCD591 /* SongPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongPlayer.swift; sourceTree = "<group>"; };
 		F08EC30F24BD219B000DCA32 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		F08EC31124C05321000DCA32 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		F08FF17324A3982800A29C71 /* Zealous.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zealous.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F08FF17624A3982800A29C71 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F08FF17824A3982800A29C71 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -59,7 +61,7 @@
 		F08FF18224A3982D00A29C71 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F08FF18324A3982D00A29C71 /* Zealous.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Zealous.entitlements; sourceTree = "<group>"; };
 		F08FF18924A3A05200A29C71 /* Lyrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lyrics.swift; sourceTree = "<group>"; };
-		F08FF18D24A3C0D200A29C71 /* EncoderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncoderViewController.swift; sourceTree = "<group>"; };
+		F08FF18D24A3C0D200A29C71 /* LyricMarkingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricMarkingView.swift; sourceTree = "<group>"; };
 		F08FF19024A4252500A29C71 /* LyricSeparatorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricSeparatorTest.swift; sourceTree = "<group>"; };
 		F08FF19624A4255B00A29C71 /* ZealousTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZealousTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F08FF19824A4255B00A29C71 /* ZealousTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZealousTests.swift; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				F051E7AD24B7DDD400CCD591 /* SwiftUI+Ext.swift */,
+				F08EC31124C05321000DCA32 /* String.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -127,7 +130,7 @@
 				F08FF18924A3A05200A29C71 /* Lyrics.swift */,
 				F08FF1A424A5407900A29C71 /* Tree.swift */,
 				F08FF18F24A424FC00A29C71 /* Tests */,
-				F08FF18D24A3C0D200A29C71 /* EncoderViewController.swift */,
+				F08FF18D24A3C0D200A29C71 /* LyricMarkingView.swift */,
 				F051E7AF24B8C0F100CCD591 /* SongPlayer.swift */,
 				F0A981D024BBBC7D00F229AC /* SwiftUI */,
 				F051E7B124BB208A00CCD591 /* Extensions */,
@@ -303,11 +306,12 @@
 				F08FF1A524A5407900A29C71 /* Tree.swift in Sources */,
 				F051E7AC24B6375700CCD591 /* ContentView.swift in Sources */,
 				F08FF17724A3982800A29C71 /* AppDelegate.swift in Sources */,
-				F08FF18E24A3C0D200A29C71 /* EncoderViewController.swift in Sources */,
+				F08FF18E24A3C0D200A29C71 /* LyricMarkingView.swift in Sources */,
 				F0A981C824BB54BA00F229AC /* KeyboardControl.swift in Sources */,
 				F0A981CF24BBBC5300F229AC /* SongSelectionView.swift in Sources */,
 				F0A981C624BB242E00F229AC /* LyricExporter.swift in Sources */,
 				F051E7A424B134E000CCD591 /* ColorAlternator.swift in Sources */,
+				F08EC31224C05321000DCA32 /* String.swift in Sources */,
 				F0AAB04224BCC16E00FAC35F /* SongMarkingController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

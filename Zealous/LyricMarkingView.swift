@@ -1,5 +1,5 @@
 //
-//  EncoderViewController.swift
+//  LyricMarkingView.swift
 //  Zealous
 //
 //  Created by Chinh Vu on 6/24/20.
@@ -8,10 +8,6 @@
 
 import AppKit
 import AVKit
-
-class EncoderViewController: NSViewController {
-	var player: AVPlayer?
-}
 
 // Because we can't add highlight underneath otherwise
 class TextContainerView: NSView {
@@ -49,23 +45,44 @@ class LyricMarkingView: NSView {
 		let view = TextContainerView(frame: bounds)
 		return view
 	}()
-		
+	
 	private var textView: NSTextView {
 		textContainerView.textView
 	}
 	
 	private var colorPicker = ColorAlternator(colorPool: [#colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1), #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1), #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)])
-	var highlightViews = [String.Index: NSView]()
+	private var highlightViews = [String.Index: NSView]()
+	private var clickRecognizer: NSClickGestureRecognizer!
+	var isEditable: Bool = false {
+		didSet {
+			guard isEditable != oldValue else {
+				return
+			}
+			textView.isEditable = isEditable
+			clickRecognizer.isEnabled = !isEditable
+			if !isEditable { // reset
+				separator = LyricSeparator(lyric: textView.string)
+				// TODO: might want to recalculate segments instead of dumping
+				highlightViews.forEach { (_, view) in
+					view.removeFromSuperview()
+				}
+				highlightViews = [:]
+			} else {
+				highlightViews.forEach { (_, view) in
+					view.isHidden = true
+				}
+			}
+		}
+	}
 	
 	override init(frame frameRect: NSRect) {
-
 		super.init(frame: frameRect)
 		addSubview(scrollView)
 		scrollView.documentView = textContainerView
 		textView.string = lyric
 		textView.isEditable = false
-		let gest = NSClickGestureRecognizer(target: self, action: #selector(didClick(sender:)))
-		textView.addGestureRecognizer(gest)
+		clickRecognizer = NSClickGestureRecognizer(target: self, action: #selector(didClick(sender:)))
+		textView.addGestureRecognizer(clickRecognizer)
 	}
 	
 	@objc func didClick(sender: NSClickGestureRecognizer) {
@@ -117,7 +134,6 @@ class LyricMarkingView: NSView {
 
 extension LyricMarkingView {
 	var lyric: String { """
-	abcd😄😄😄  pppmo😄😄😄po
 	新聞の一面に　僕の名前見出しで
 	あんたの気を惹きたい
 	今日じゃないと　絶対だめなんだよ

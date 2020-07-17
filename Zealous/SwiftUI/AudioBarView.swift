@@ -11,11 +11,13 @@ import SwiftUI
 struct Marker: View {
 	static let markerHeight: CGFloat = 3
 	let axis: Axis
-	@State var enabled = true
+	var enabled = true
+	var selected: Bool
 	
 	var body: some View {
 		Rectangle()
 			.foregroundColor(self.enabled ? Color.blue : Color.red)
+			.border(self.selected ? Color.white : .clear)
 			.frame(axis: self.axis, majorLength: Marker.markerHeight)
 			.offset(-Marker.markerHeight / 2, along: self.axis)
 	}
@@ -35,20 +37,27 @@ struct Caret: View {
 	}
 }
 
+struct AudioBarControl {
+	var removeMarker: (SongMarker) -> Void
+}
+
 struct Bar: View {
 	var axis: Axis
 	var player: SongPlayer
 	@State var selectedMarker: Int = -1
-	var markerFractions: [CGFloat]
+	var markers: [SongMarker]
 	
 	var body: some View {
 		ZStack(alignment: .topLeading) {
 			GeometryReader { geo in
 				Rectangle()
 					.foregroundColor(Color.yellow)
-				ForEach(self.markerFractions, id: \.self) { fraction in
-					Marker(axis: self.axis)
-						.offset(geo.length(along: self.axis) * fraction, along: self.axis)
+				ForEach(0..<self.markers.count, id: \.self) { i in
+					Marker(axis: self.axis, selected: i == self.selectedMarker)
+						.offset(geo.length(along: self.axis) * self.markers[i].fraction, along: self.axis)
+						.onTapGesture {
+							self.selectedMarker = self.selectedMarker == i ? -1 : i
+					}
 				}
 				Caret(axis: self.axis, geo: geo, player: self.player)
 			}
@@ -62,7 +71,7 @@ struct AudioBarViewUI: View {
 	var player: SongPlayer
 	
 	var body: some View {
-		Bar(axis: self.axis, player: player, markerFractions: markingController.markerFractions)
+		Bar(axis: self.axis, player: player, markers: markingController.markers )
 			.frame(axis: self.axis, minorLength: 30)
 			.padding([.vertical], 20)
 	}

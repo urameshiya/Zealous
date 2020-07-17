@@ -8,32 +8,48 @@
 
 import Foundation
 
-class SongMarkingController: ObservableObject {
-	@Published private(set) var markerFractions: [CGFloat] = []
+struct SongMarker: Comparable {
+	var fraction: CGFloat
+	var time: CGFloat
 	
-	var segments: GapSegmentedRange<CGFloat>
+	static func < (lhs: SongMarker, rhs: SongMarker) -> Bool {
+		lhs.time < rhs.time
+	}
+}
+
+class SongMarkingController: ObservableObject {
+	@Published private(set) var markers: [SongMarker] = []
+	
+	var segments: GapSegmentedRange<SongMarker>
 	private var player: SongPlayer
 	
 	init(player: SongPlayer) {
-		segments = .init(maxRange: 0..<CGFloat(player.duration))
+		segments = .init(maxRange: SongMarker(fraction: 0.0, time: 0.0)..<SongMarker(fraction: 1.0, time: CGFloat(player.duration)))
 		self.player = player
 	}
 	
 	func markCurrent() {
-		let marker = CGFloat(player.fractionElapsed)
+		let marker = SongMarker(fraction: CGFloat(player.fractionElapsed), time: CGFloat(player.timeElapsed))
 		segments.mark(index: marker, enabled: true)
-		markerFractions.append(marker)
-		print("Hmmm")
+		markers.append(marker)
 	}
 	
-	func disableMarker(at pos: CGFloat) {
-		segments.mark(index: pos, enabled: false)
+	func disable(marker: SongMarker) {
+		assert(segments.segment(containing: marker) != nil, "Marker doesn't exist")
+		segments.mark(index: marker, enabled: false)
 	}
 	
-	func removeMarker(at pos: CGFloat) {
-		if let index = markerFractions.firstIndex(where: { $0 == pos }) {
-			segments.removeMarker(at: pos)
-			markerFractions.remove(at: index)
+	func remove(marker: SongMarker) {
+		if let index = markers.firstIndex(where: { $0 == marker }) {
+			segments.removeMarker(at: marker)
+			markers.remove(at: index)
+		} else {
+			assertionFailure("Marker doesn't exist")
 		}
+	}
+	
+	func seek(to marker: SongMarker) {
+		player.seek(to: marker.time)
+		player.pause()
 	}
 }
