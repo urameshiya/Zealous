@@ -9,7 +9,7 @@
 import Foundation
 
 protocol BeatmapExporter {
-	func export(lyricSeparator: LyricSeparator, audioSegments: GapSegmentedRange<SongMarker>)
+	func export(beatmap: Beatmap)
 }
 
 final class LyricExporter: BeatmapExporter {
@@ -19,19 +19,20 @@ final class LyricExporter: BeatmapExporter {
 		self.destination = destination
 	}
 	
-	func export(lyricSeparator: LyricSeparator, audioSegments: GapSegmentedRange<SongMarker>) {
+	func export(beatmap: Beatmap) {
+		guard let lyricSeparator = beatmap.lyricSeparator else {
+			return
+		}
 		let processedLyric = serialize(range: lyricSeparator.segments,
 									   distance: lyricSeparator.lyric.distance(from:to:))
 		var beats = [BeatmapFile.Beat]()
 		var disabledMarkers = [CGFloat]()
-		let audioMarkers = audioSegments.segments.markers
+		let audioMarkers = beatmap.songMarkers
 		var i = 0
-		audioMarkers.traverse { (marker) in
-			if marker.isValid, i < processedLyric.count {
-				beats.append(.init(time: marker.index.time, segment: processedLyric[i]))
+		audioMarkers.forEach { (marker) in
+			if i < processedLyric.count {
+				beats.append(.init(time: marker.time, segment: processedLyric[i]))
 				i += 1
-			} else {
-				disabledMarkers.append(marker.index.time)
 			}
 		}
 		
@@ -47,6 +48,32 @@ final class LyricExporter: BeatmapExporter {
 		}
 	}
 
+}
+
+final class LyricImporter {
+	func load(from url: URL) throws -> Beatmap {
+		let data = try Data(contentsOf: url)
+		let file = try JSONDecoder().decode(BeatmapFile.self, from: data)
+		let beatmap = Beatmap()
+		let separator = LyricSeparator(lyric: file.lyric)
+		deserialize(separator: separator, offsets: file.beatmap.map { $0.segment })
+		beatmap.lyricSeparator = separator
+		beatmap.songMarkers = file.beatmap.map { .init(time: $0.time) }
+		return beatmap
+	}
+}
+
+private func deserialize(separator: LyricSeparator, offsets: [Range<Int>]) {
+	let range = separator.segments
+	let lyric = separator.lyric
+	var lastIndex = lyric.startIndex
+	for segment in offsets {
+		let valid = lyric.index(lastIndex, offsetBy: segment.lowerBound)
+		let invalid = lyric.index(valid, offsetBy: segment.upperBound)
+		range.mark(index: valid, enabled: true)
+		range.mark(index: invalid, enabled: false)
+		lastIndex = invalid
+	}
 }
 
 /// lowerbound: offset from the previous segment/length of the invalid segment,

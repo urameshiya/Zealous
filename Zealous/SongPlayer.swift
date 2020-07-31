@@ -7,6 +7,7 @@
 //
 
 import AVFoundation
+import Combine
 
 protocol SongPlayerDelegate: class {
 	func songPlayerStatusDidChanged(status: AVPlayerItem.Status)

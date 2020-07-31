@@ -8,6 +8,13 @@
 
 import AppKit
 import AVKit
+import Combine
+
+enum MarkingViewPresentationMode {
+	case marker
+	case segment
+	case none
+}
 
 // Because we can't add highlight underneath otherwise
 class TextContainerView: NSView {
@@ -32,8 +39,13 @@ class TextContainerView: NSView {
 	}
 }
 
+protocol LyricMarkingViewPresentation {
+	func show()
+	func cleanup()
+}
+
 class LyricMarkingView: NSView {
-	lazy var separator = LyricSeparator(lyric: lyric)
+	let beatmap: Beatmap
 	
 	private lazy var scrollView: NSScrollView = {
 		let view = NSScrollView(frame: bounds)
@@ -41,66 +53,38 @@ class LyricMarkingView: NSView {
 		return view
 	}()
 	
-	private lazy var textContainerView: TextContainerView = {
+	lazy var textContainerView: TextContainerView = {
 		let view = TextContainerView(frame: bounds)
 		return view
 	}()
 	
-	private var textView: NSTextView {
+	var textView: NSTextView {
 		textContainerView.textView
 	}
 	
-	private var colorPicker = ColorAlternator(colorPool: [#colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1), #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1), #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)])
-	private var highlightViews = [String.Index: NSView]()
-	private var clickRecognizer: NSClickGestureRecognizer!
 	var isEditable: Bool = false {
 		didSet {
 			guard isEditable != oldValue else {
 				return
 			}
 			textView.isEditable = isEditable
-			clickRecognizer.isEnabled = !isEditable
 			if !isEditable { // reset
-				separator = LyricSeparator(lyric: textView.string)
-				// TODO: might want to recalculate segments instead of dumping
-				highlightViews.forEach { (_, view) in
-					view.removeFromSuperview()
-				}
-				highlightViews = [:]
-			} else {
-				highlightViews.forEach { (_, view) in
-					view.isHidden = true
-				}
+				textView.isSelectable = false
+				beatmap.lyricSeparator = LyricSeparator(lyric: textView.string)
 			}
 		}
 	}
 	
-	override init(frame frameRect: NSRect) {
-		super.init(frame: frameRect)
+	private var presentation: LyricMarkingViewPresentation?
+		
+	init(beatmap: Beatmap)  {
+		self.beatmap = beatmap
+		super.init(frame: .zero)
 		addSubview(scrollView)
 		scrollView.documentView = textContainerView
 		textView.string = lyric
 		textView.isEditable = false
-		clickRecognizer = NSClickGestureRecognizer(target: self, action: #selector(didClick(sender:)))
-		textView.addGestureRecognizer(clickRecognizer)
-	}
-	
-	@objc func didClick(sender: NSClickGestureRecognizer) {
-		let layoutManager = textView.layoutManager!
-		var fraction: CGFloat = 0
-		let point = sender.location(in: textView)
-		let dist = layoutManager.characterIndex(for: point,
-													 in: textView.textContainer!,
-													 fractionOfDistanceBetweenInsertionPoints: &fraction)
-		let index = String.Index(utf16Offset: dist, in: lyric)
-		print(lyric[index])
-		
-		if let (old, new) = separator.cutSegment(at: fraction < 0.5 ? index: lyric.index(after: index)) {
-			removeSegment(withStartIndex: old.lowerBound)
-			new.forEach { (segment) in
-				positionHighlightView(over: segment)
-			}
-		}
+		textView.isSelectable = false
 	}
 	
 	required init?(coder: NSCoder) {
@@ -112,23 +96,28 @@ class LyricMarkingView: NSView {
 		super.layout()
 	}
 	
-	func removeSegment(withStartIndex startIndex: String.Index) {
-		if let view = highlightViews[startIndex] {
-			view.removeFromSuperview()
-		}
+	var layoutManager: NSLayoutManager {
+		textView.layoutManager!
 	}
 	
-	func positionHighlightView(over segment: Range<String.Index>) {
-		let frame = textView.layoutManager!.boundingRect(forGlyphRange: NSRange(segment, in:lyric), in: textView.textContainer!)
-		let highlight = NSView(frame: textView.convert(frame, to: textContainerView))
-		highlight.wantsLayer = true
-		let hLayer = highlight.layer!
-		hLayer.backgroundColor = colorPicker.randomColor(differentFrom: [.red]).cgColor
-		hLayer.opacity = 0.3
-		hLayer.cornerRadius = 4
-		hLayer.masksToBounds = true
-		textContainerView.addSubview(highlight, positioned: .below, relativeTo: textView)
-		highlightViews[segment.lowerBound] = highlight
+	var textContainer: NSTextContainer {
+		textView.textContainer!
+	}
+	
+	func changePresentation(_ mode: MarkingViewPresentationMode) {
+		if let presentation = presentation {
+			presentation.cleanup()
+		}
+		switch mode {
+		case .marker:
+			presentation = LyricMarkerPresentation(lyricView: self)
+		case .segment:
+			presentation = LyricRangePresentation(view: self)
+		case .none:
+			presentation = nil
+			return
+		}
+		presentation!.show()
 	}
 }
 
@@ -190,4 +179,8 @@ extension LyricMarkingView {
 	超越したの、1LDKで
 	"""
 	}
+}
+
+extension NSLayoutManager {
+	
 }

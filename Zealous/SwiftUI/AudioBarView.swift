@@ -54,7 +54,8 @@ struct Bar: View {
 					.foregroundColor(Color.yellow)
 				ForEach(0..<self.markers.count, id: \.self) { i in
 					Marker(axis: self.axis, selected: i == self.selectedMarker)
-						.offset(geo.length(along: self.axis) * self.markers[i].fraction, along: self.axis)
+						.offset(geo.length(along: self.axis) * self.markers[i].time / CGFloat(self.player.duration),
+								along: self.axis)
 						.onTapGesture {
 							self.selectedMarker = self.selectedMarker == i ? -1 : i
 					}
@@ -71,16 +72,17 @@ struct AudioBarViewUI: View {
 	var player: SongPlayer
 	
 	var body: some View {
-		Bar(axis: self.axis, player: player, markers: markingController.markers )
+		Bar(axis: self.axis, player: player, markers: markingController.beatmap.songMarkers)
 			.frame(axis: self.axis, minorLength: 30)
 			.padding([.vertical], 20)
 	}
 }
 
 struct AudioBar_Previews: PreviewProvider {
+	static let beatmap = Beatmap()
 	static let player = SongPlayer()
     static var previews: some View {
-		AudioBarViewUI(axis: .vertical, markingController: SongMarkingController(player: player), player: player)
+		AudioBarViewUI(axis: .vertical, markingController: SongMarkingController(beatmap: beatmap, player: player), player: player)
 			.frame(width: 100, height: 300)
     }
 }

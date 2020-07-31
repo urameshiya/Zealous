@@ -10,6 +10,7 @@ import AppKit
 
 class ColorAlternator {
 	private var colorPool: [NSColor]
+	var currentIndex = 0
 	
 	init(colorPool: Set<NSColor>) {
 		self.colorPool = .init(colorPool)
@@ -25,5 +26,10 @@ class ColorAlternator {
 			random = (random + 1) % colorPool.count
 		} while colors.contains(color)
 		return color
+	}
+	
+	func nextColor() -> NSColor {
+		currentIndex = (currentIndex + 1) % colorPool.count
+		return colorPool[currentIndex]
 	}
 }

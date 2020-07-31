@@ -7,12 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F00635E224C3EE8F001D1392 /* LyricMarkerPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00635E124C3EE8F001D1392 /* LyricMarkerPresentation.swift */; };
+		F00635E424C4AE05001D1392 /* NSLayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00635E324C4AE05001D1392 /* NSLayoutManager.swift */; };
 		F051E7A424B134E000CCD591 /* ColorAlternator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F051E7A324B134E000CCD591 /* ColorAlternator.swift */; };
 		F051E7A924B35F0600CCD591 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F051E7A824B35F0600CCD591 /* MainViewController.swift */; };
 		F051E7AB24B3C76D00CCD591 /* AudioBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F051E7AA24B3C76D00CCD591 /* AudioBarView.swift */; };
 		F051E7AC24B6375700CCD591 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08FF17824A3982800A29C71 /* ContentView.swift */; };
 		F051E7AE24B7DDD500CCD591 /* SwiftUI+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F051E7AD24B7DDD400CCD591 /* SwiftUI+Ext.swift */; };
 		F051E7B024B8C0F100CCD591 /* SongPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F051E7AF24B8C0F100CCD591 /* SongPlayer.swift */; };
+		F08A7F4724C527D5001F76C0 /* LyricGroupings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08A7F4624C527D5001F76C0 /* LyricGroupings.swift */; };
+		F08A7F4924C7533E001F76C0 /* LyricRangePresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08A7F4824C7533E001F76C0 /* LyricRangePresentation.swift */; };
+		F08A7F4B24C8F141001F76C0 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08A7F4A24C8F141001F76C0 /* Collection.swift */; };
+		F08A7F4D24CCBA9E001F76C0 /* Beatmap.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08A7F4C24CCBA9E001F76C0 /* Beatmap.swift */; };
 		F08EC31024BD219C000DCA32 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = F08EC30F24BD219B000DCA32 /* .gitignore */; };
 		F08EC31224C05321000DCA32 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08EC31124C05321000DCA32 /* String.swift */; };
 		F08FF17724A3982800A29C71 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08FF17624A3982800A29C71 /* AppDelegate.swift */; };
@@ -45,11 +51,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F00635E124C3EE8F001D1392 /* LyricMarkerPresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricMarkerPresentation.swift; sourceTree = "<group>"; };
+		F00635E324C4AE05001D1392 /* NSLayoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSLayoutManager.swift; sourceTree = "<group>"; };
 		F051E7A324B134E000CCD591 /* ColorAlternator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorAlternator.swift; sourceTree = "<group>"; };
 		F051E7A824B35F0600CCD591 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		F051E7AA24B3C76D00CCD591 /* AudioBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioBarView.swift; sourceTree = "<group>"; };
 		F051E7AD24B7DDD400CCD591 /* SwiftUI+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Ext.swift"; sourceTree = "<group>"; };
 		F051E7AF24B8C0F100CCD591 /* SongPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongPlayer.swift; sourceTree = "<group>"; };
+		F08A7F4624C527D5001F76C0 /* LyricGroupings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricGroupings.swift; sourceTree = "<group>"; };
+		F08A7F4824C7533E001F76C0 /* LyricRangePresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricRangePresentation.swift; sourceTree = "<group>"; };
+		F08A7F4A24C8F141001F76C0 /* Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
+		F08A7F4C24CCBA9E001F76C0 /* Beatmap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Beatmap.swift; sourceTree = "<group>"; };
 		F08EC30F24BD219B000DCA32 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		F08EC31124C05321000DCA32 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		F08FF17324A3982800A29C71 /* Zealous.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zealous.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -100,6 +112,8 @@
 			children = (
 				F051E7AD24B7DDD400CCD591 /* SwiftUI+Ext.swift */,
 				F08EC31124C05321000DCA32 /* String.swift */,
+				F00635E324C4AE05001D1392 /* NSLayoutManager.swift */,
+				F08A7F4A24C8F141001F76C0 /* Collection.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -128,9 +142,13 @@
 			children = (
 				F08FF17624A3982800A29C71 /* AppDelegate.swift */,
 				F08FF18924A3A05200A29C71 /* Lyrics.swift */,
+				F08A7F4C24CCBA9E001F76C0 /* Beatmap.swift */,
+				F08A7F4624C527D5001F76C0 /* LyricGroupings.swift */,
 				F08FF1A424A5407900A29C71 /* Tree.swift */,
 				F08FF18F24A424FC00A29C71 /* Tests */,
 				F08FF18D24A3C0D200A29C71 /* LyricMarkingView.swift */,
+				F00635E124C3EE8F001D1392 /* LyricMarkerPresentation.swift */,
+				F08A7F4824C7533E001F76C0 /* LyricRangePresentation.swift */,
 				F051E7AF24B8C0F100CCD591 /* SongPlayer.swift */,
 				F0A981D024BBBC7D00F229AC /* SwiftUI */,
 				F051E7B124BB208A00CCD591 /* Extensions */,
@@ -301,10 +319,16 @@
 				F0A981CA24BB8A8B00F229AC /* iTunes.swift in Sources */,
 				F051E7B024B8C0F100CCD591 /* SongPlayer.swift in Sources */,
 				F08FF18A24A3A05200A29C71 /* Lyrics.swift in Sources */,
+				F08A7F4D24CCBA9E001F76C0 /* Beatmap.swift in Sources */,
+				F08A7F4924C7533E001F76C0 /* LyricRangePresentation.swift in Sources */,
 				F051E7AE24B7DDD500CCD591 /* SwiftUI+Ext.swift in Sources */,
 				F051E7AB24B3C76D00CCD591 /* AudioBarView.swift in Sources */,
+				F00635E224C3EE8F001D1392 /* LyricMarkerPresentation.swift in Sources */,
+				F08A7F4724C527D5001F76C0 /* LyricGroupings.swift in Sources */,
 				F08FF1A524A5407900A29C71 /* Tree.swift in Sources */,
+				F00635E424C4AE05001D1392 /* NSLayoutManager.swift in Sources */,
 				F051E7AC24B6375700CCD591 /* ContentView.swift in Sources */,
+				F08A7F4B24C8F141001F76C0 /* Collection.swift in Sources */,
 				F08FF17724A3982800A29C71 /* AppDelegate.swift in Sources */,
 				F08FF18E24A3C0D200A29C71 /* LyricMarkingView.swift in Sources */,
 				F0A981C824BB54BA00F229AC /* KeyboardControl.swift in Sources */,

@@ -19,6 +19,8 @@ private class MainView: NSView {
 	let selectButton: NSButton
 	let editButton: NSButton
 	let exportButton: NSButton
+	let markerModeButton: NSButton
+	let loadBeatmapButton: NSButton
 	let buttonStack: NSStackView
 	let masterStack: NSStackView
 	var audioBarView: NSHostingView<AnyView>?
@@ -33,16 +35,24 @@ private class MainView: NSView {
 								target: controller,
 								action: #selector(Controller.export))
 		editButton = NSButton(title: "Edit lyric", target: nil, action: nil)
+		markerModeButton = NSButton(title: "Marker Mode", target: nil, action: nil)
+		loadBeatmapButton = NSButton(title: "Load Beatmap",
+									 target: controller,
+									 action: #selector(Controller.loadBeatmap))
 		artworkView = .init()
-		buttonStack = .init(views: [artworkView, selectButton, exportButton, editButton])
+		buttonStack = .init(views: [artworkView, selectButton, loadBeatmapButton,
+									exportButton, editButton, markerModeButton])
 		buttonStack.orientation = .vertical
-		lyricView = .init()
+		lyricView = .init(beatmap: controller.beatmap)
 		masterStack = .init(views: [lyricView, buttonStack])
 		
 		super.init(frame: .zero)
 		
 		editButton.target = self
 		editButton.action = #selector(editButtonDidClick)
+		
+		markerModeButton.target = self
+		markerModeButton.action = #selector(markerMode)
 		
 		masterStack.autoresizingMask = [.width, .height]
 		masterStack.frame = .zero
@@ -95,8 +105,13 @@ private class MainView: NSView {
 			editButton.keyEquivalent = ""
 		}
 	}
+	
+	@objc func markerMode() {
+		lyricView.changePresentation(.segment)
+	}
 }
 
+// MARK: - View Controller
 class MainViewController: NSViewController, SongPlayerDelegate {
 	private var mainView: MainView {
 		view as! MainView
@@ -120,10 +135,11 @@ class MainViewController: NSViewController, SongPlayerDelegate {
 	var musicApp: iTunesService!
 	
 	var selectionViewHost: NSViewController!
+	var songMarkingController: SongMarkingController?
 	
 	override var acceptsFirstResponder: Bool { true }
 	
-	var songMarkingController: SongMarkingController?
+	var beatmap: Beatmap = Beatmap()
 		
 	override func keyDown(with event: NSEvent) {
 //		print("Keydown \(event.characters)")
@@ -134,6 +150,7 @@ class MainViewController: NSViewController, SongPlayerDelegate {
 			songMarkingController?.markCurrent()
 		case Character.delete:
 			// TODO: Delete
+			print("Deleted")
 			break
 		default:
 			nextResponder?.keyDown(with: event)
@@ -145,13 +162,17 @@ class MainViewController: NSViewController, SongPlayerDelegate {
 		case .failed:
 			print("Failed to load file")
 		case .readyToPlay:
-			songMarkingController = .init(player: player)
-			mainView.showAudioBar(AudioBarViewUI(axis: .vertical,
-												 markingController: songMarkingController!,
-												 player: player))
+			songMarkingController = .init(beatmap: beatmap, player: player)
+			reloadAudioBar()
 		default:
 			player.pause()
 		}
+	}
+	
+	func reloadAudioBar() {
+		mainView.showAudioBar(AudioBarViewUI(axis: .vertical,
+											 markingController: songMarkingController!,
+											 player: player))
 	}
 	
 	func didSelect(song: SongResource) {
@@ -180,11 +201,17 @@ class MainViewController: NSViewController, SongPlayerDelegate {
 	}
 	
 	@objc func export() {
-		guard let audioSegments = songMarkingController?.segments else {
-			return
-		}
 		let outURL = URL(fileURLWithPath: "Documents/test.json")
-		LyricExporter(destination: outURL).export(lyricSeparator: mainView.lyricView.separator, audioSegments: audioSegments)
+		LyricExporter(destination: outURL).export(beatmap: beatmap)
+	}
+	
+	var testURL = URL(fileURLWithPath: "Documents/test.json")
+	
+	@objc func loadBeatmap() {
+		let newBeatmap = try! LyricImporter().load(from: testURL)
+		beatmap.lyricSeparator = newBeatmap.lyricSeparator
+		beatmap.songMarkers = newBeatmap.songMarkers
+		beatmap.player = player
 	}
 	
 	@objc func play() {
