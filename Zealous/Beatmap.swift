@@ -13,4 +13,6 @@ class Beatmap: ObservableObject {
 	@Published var lyricSeparator: LyricSeparator?
 	@Published var songMarkers: [SongMarker] = []
 	@Published var player: SongPlayer?
+	var title: String?
+	var artist: String?
 }

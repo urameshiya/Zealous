@@ -170,8 +170,11 @@ class MainViewController: NSViewController, SongPlayerDelegate {
 	}
 	
 	func reloadAudioBar() {
+		guard let songMarkingController = songMarkingController else {
+			return
+		}
 		mainView.showAudioBar(AudioBarViewUI(axis: .vertical,
-											 markingController: songMarkingController!,
+											 markingController: songMarkingController,
 											 player: player))
 	}
 	
@@ -202,7 +205,6 @@ class MainViewController: NSViewController, SongPlayerDelegate {
 	
 	@objc func export() {
 		let outURL = URL(fileURLWithPath: "Documents/test.json")
-		LyricExporter(destination: outURL).export(beatmap: beatmap)
 	}
 	
 	var testURL = URL(fileURLWithPath: "Documents/test.json")
@@ -212,6 +214,7 @@ class MainViewController: NSViewController, SongPlayerDelegate {
 		beatmap.lyricSeparator = newBeatmap.lyricSeparator
 		beatmap.songMarkers = newBeatmap.songMarkers
 		beatmap.player = player
+		reloadAudioBar()
 	}
 	
 	@objc func play() {

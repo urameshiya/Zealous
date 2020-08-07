@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -27,17 +27,14 @@
 		F08FF18124A3982D00A29C71 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F08FF17F24A3982D00A29C71 /* Main.storyboard */; };
 		F08FF18A24A3A05200A29C71 /* Lyrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08FF18924A3A05200A29C71 /* Lyrics.swift */; };
 		F08FF18E24A3C0D200A29C71 /* LyricMarkingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08FF18D24A3C0D200A29C71 /* LyricMarkingView.swift */; };
-		F08FF19924A4255B00A29C71 /* ZealousTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08FF19824A4255B00A29C71 /* ZealousTests.swift */; };
-		F08FF1A024A4256500A29C71 /* LyricSeparatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08FF19024A4252500A29C71 /* LyricSeparatorTest.swift */; };
-		F08FF1A124A4257C00A29C71 /* Lyrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08FF18924A3A05200A29C71 /* Lyrics.swift */; };
 		F08FF1A524A5407900A29C71 /* Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08FF1A424A5407900A29C71 /* Tree.swift */; };
-		F08FF1A724A566EF00A29C71 /* TreeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08FF1A624A566EF00A29C71 /* TreeTest.swift */; };
-		F08FF1A824A5676500A29C71 /* Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08FF1A424A5407900A29C71 /* Tree.swift */; };
+		F0A7048024DB2C920060F988 /* BeatmapDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A7047F24DB2C920060F988 /* BeatmapDatabase.swift */; };
+		F0A7048724DE18050060F988 /* BeatmapDatabaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A7048124DE0C830060F988 /* BeatmapDatabaseTest.swift */; };
 		F0A981C624BB242E00F229AC /* LyricExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A981C524BB242D00F229AC /* LyricExporter.swift */; };
-		F0A981C824BB54BA00F229AC /* KeyboardControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A981C724BB54BA00F229AC /* KeyboardControl.swift */; };
 		F0A981CA24BB8A8B00F229AC /* iTunes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A981C924BB8A8B00F229AC /* iTunes.swift */; };
 		F0A981CF24BBBC5300F229AC /* SongSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A981CE24BBBC5300F229AC /* SongSelectionView.swift */; };
 		F0AAB04224BCC16E00FAC35F /* SongMarkingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0AAB04124BCC16E00FAC35F /* SongMarkingController.swift */; };
+		F0AE327324D64B980083D46D /* ZealLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = F0AE327224D64B980083D46D /* ZealLibrary */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,8 +77,9 @@
 		F08FF19A24A4255B00A29C71 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F08FF1A424A5407900A29C71 /* Tree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tree.swift; sourceTree = "<group>"; };
 		F08FF1A624A566EF00A29C71 /* TreeTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeTest.swift; sourceTree = "<group>"; };
+		F0A7047F24DB2C920060F988 /* BeatmapDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeatmapDatabase.swift; sourceTree = "<group>"; };
+		F0A7048124DE0C830060F988 /* BeatmapDatabaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeatmapDatabaseTest.swift; sourceTree = "<group>"; };
 		F0A981C524BB242D00F229AC /* LyricExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricExporter.swift; sourceTree = "<group>"; };
-		F0A981C724BB54BA00F229AC /* KeyboardControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardControl.swift; sourceTree = "<group>"; };
 		F0A981C924BB8A8B00F229AC /* iTunes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTunes.swift; sourceTree = "<group>"; };
 		F0A981CC24BB8A9E00F229AC /* iTunes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iTunes.h; sourceTree = "<group>"; };
 		F0A981CD24BB8AAA00F229AC /* Zealous-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Zealous-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -94,6 +92,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0AE327324D64B980083D46D /* ZealLibrary in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,9 +142,9 @@
 				F08FF17624A3982800A29C71 /* AppDelegate.swift */,
 				F08FF18924A3A05200A29C71 /* Lyrics.swift */,
 				F08A7F4C24CCBA9E001F76C0 /* Beatmap.swift */,
+				F0A7047F24DB2C920060F988 /* BeatmapDatabase.swift */,
 				F08A7F4624C527D5001F76C0 /* LyricGroupings.swift */,
 				F08FF1A424A5407900A29C71 /* Tree.swift */,
-				F08FF18F24A424FC00A29C71 /* Tests */,
 				F08FF18D24A3C0D200A29C71 /* LyricMarkingView.swift */,
 				F00635E124C3EE8F001D1392 /* LyricMarkerPresentation.swift */,
 				F08A7F4824C7533E001F76C0 /* LyricRangePresentation.swift */,
@@ -155,7 +154,6 @@
 				F051E7A824B35F0600CCD591 /* MainViewController.swift */,
 				F0AAB04124BCC16E00FAC35F /* SongMarkingController.swift */,
 				F0A981CB24BB8A9000F229AC /* iTunes */,
-				F0A981C724BB54BA00F229AC /* KeyboardControl.swift */,
 				F0A981C524BB242D00F229AC /* LyricExporter.swift */,
 				F051E7A324B134E000CCD591 /* ColorAlternator.swift */,
 				F08FF17824A3982800A29C71 /* ContentView.swift */,
@@ -176,18 +174,12 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		F08FF18F24A424FC00A29C71 /* Tests */ = {
+		F08FF19724A4255B00A29C71 /* ZealousTests */ = {
 			isa = PBXGroup;
 			children = (
 				F08FF19024A4252500A29C71 /* LyricSeparatorTest.swift */,
 				F08FF1A624A566EF00A29C71 /* TreeTest.swift */,
-			);
-			path = Tests;
-			sourceTree = "<group>";
-		};
-		F08FF19724A4255B00A29C71 /* ZealousTests */ = {
-			isa = PBXGroup;
-			children = (
+				F0A7048124DE0C830060F988 /* BeatmapDatabaseTest.swift */,
 				F08FF19824A4255B00A29C71 /* ZealousTests.swift */,
 				F08FF19A24A4255B00A29C71 /* Info.plist */,
 			);
@@ -229,6 +221,9 @@
 			dependencies = (
 			);
 			name = Zealous;
+			packageProductDependencies = (
+				F0AE327224D64B980083D46D /* ZealLibrary */,
+			);
 			productName = Zealous;
 			productReference = F08FF17324A3982800A29C71 /* Zealous.app */;
 			productType = "com.apple.product-type.application";
@@ -279,6 +274,9 @@
 				Base,
 			);
 			mainGroup = F08FF16A24A3982800A29C71;
+			packageReferences = (
+				F0AE327124D64B980083D46D /* XCRemoteSwiftPackageReference "ZealLibrary" */,
+			);
 			productRefGroup = F08FF17424A3982800A29C71 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -331,12 +329,12 @@
 				F08A7F4B24C8F141001F76C0 /* Collection.swift in Sources */,
 				F08FF17724A3982800A29C71 /* AppDelegate.swift in Sources */,
 				F08FF18E24A3C0D200A29C71 /* LyricMarkingView.swift in Sources */,
-				F0A981C824BB54BA00F229AC /* KeyboardControl.swift in Sources */,
 				F0A981CF24BBBC5300F229AC /* SongSelectionView.swift in Sources */,
 				F0A981C624BB242E00F229AC /* LyricExporter.swift in Sources */,
 				F051E7A424B134E000CCD591 /* ColorAlternator.swift in Sources */,
 				F08EC31224C05321000DCA32 /* String.swift in Sources */,
 				F0AAB04224BCC16E00FAC35F /* SongMarkingController.swift in Sources */,
+				F0A7048024DB2C920060F988 /* BeatmapDatabase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -344,11 +342,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F08FF1A824A5676500A29C71 /* Tree.swift in Sources */,
-				F08FF1A124A4257C00A29C71 /* Lyrics.swift in Sources */,
-				F08FF1A724A566EF00A29C71 /* TreeTest.swift in Sources */,
-				F08FF19924A4255B00A29C71 /* ZealousTests.swift in Sources */,
-				F08FF1A024A4256500A29C71 /* LyricSeparatorTest.swift in Sources */,
+				F0A7048724DE18050060F988 /* BeatmapDatabaseTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -606,6 +600,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		F0AE327124D64B980083D46D /* XCRemoteSwiftPackageReference "ZealLibrary" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/urameshiya/ZealLibrary.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F0AE327224D64B980083D46D /* ZealLibrary */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F0AE327124D64B980083D46D /* XCRemoteSwiftPackageReference "ZealLibrary" */;
+			productName = ZealLibrary;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F08FF16B24A3982800A29C71 /* Project object */;
 }

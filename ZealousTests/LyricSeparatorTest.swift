@@ -39,9 +39,6 @@ class LyricSeparatorTest: XCTestCase {
 	}
 	
 	func testMarking2() {
-		var segments = separator.markSegment(at: lyric.firstIndex(of: "い")!)
-		XCTAssertEqual(lyric[segments[0]], "らっしゃ")
-		XCTAssertEqual(lyric[segments[1]], "いな　平は成り")
-
+	
 	}
 }

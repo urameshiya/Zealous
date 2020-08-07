@@ -9,19 +9,17 @@
 import Foundation
 
 protocol BeatmapExporter {
-	func export(beatmap: Beatmap)
+	func export(beatmap: Beatmap) throws -> Data
+}
+
+enum ExporterError: Error {
+	case noLyricSeparator
 }
 
 final class LyricExporter: BeatmapExporter {
-	var destination: URL
-	
-	init(destination: URL) {
-		self.destination = destination
-	}
-	
-	func export(beatmap: Beatmap) {
+	func export(beatmap: Beatmap) throws -> Data {
 		guard let lyricSeparator = beatmap.lyricSeparator else {
-			return
+			throw ExporterError.noLyricSeparator
 		}
 		let processedLyric = serialize(range: lyricSeparator.segments,
 									   distance: lyricSeparator.lyric.distance(from:to:))
@@ -36,16 +34,11 @@ final class LyricExporter: BeatmapExporter {
 			}
 		}
 		
-		do {
-			let outFile = BeatmapFile(lyric: lyricSeparator.lyric,
-									  beatmap: beats,
-									  disabledTimes: disabledMarkers)
-			let data = try JSONEncoder().encode(outFile)
-			try data.write(to: destination)
-		} catch {
-			print("Unable to export lyrics")
-			print(error)
-		}
+		let outFile = BeatmapFile(lyric: lyricSeparator.lyric,
+								  beatmap: beats,
+								  disabledTimes: disabledMarkers)
+		let data = try JSONEncoder().encode(outFile)
+		return data
 	}
 
 }

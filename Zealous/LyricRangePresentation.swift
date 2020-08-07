@@ -84,7 +84,6 @@ final class LyricPlayAlong {
 	init(presentation: LyricRangePresentation, notifier: MarkerReachedNotifier) {
 		self.presentation = presentation
 		cancellable = notifier.sink(receiveValue: { [unowned self] (value) in
-			print(value?.position)
 			self.highlight(at: value?.position)
 		})
 	}
