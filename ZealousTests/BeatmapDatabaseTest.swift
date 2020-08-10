@@ -25,6 +25,7 @@ class BeatmapDatabaseTest: XCTestCase {
 		bm.title = "Hype Mode"
 		bm.artist = "Reol"
 		try database.save(beatmap: bm)
+		try database.save(beatmap: bm) // overwrite doesn't throw error
 		let saveURL = testDir.appendingPathComponent("Reol/Hype Mode.json")
 		XCTAssert(fm.fileExists(atPath: saveURL.path))
 	}

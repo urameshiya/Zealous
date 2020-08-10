@@ -14,19 +14,26 @@ class BeatmapDatabase {
 	var cachedTitles = [String: Set<String>]() // [Artist: Set<SongTitle>]
 	var ext = "json"
 	var exporter: BeatmapExporter = LyricExporter()
+	var importer = LyricImporter()
 
-	init(directory: URL) {
+	init(directory: URL) throws {
 		self.directory = directory
+		try fileManager.createDirectory(at: directory, withIntermediateDirectories: true, attributes: nil)
 	}
 	
 	func reload() throws {
 		cachedTitles = .init()
 		
-		for artistPath in try fileManager.contentsOfDirectory(at: directory, includingPropertiesForKeys: [.nameKey]) {
+		for artistPath in try fileManager.contentsOfDirectory(at: directory,
+															  includingPropertiesForKeys: [],
+															  options: .skipsHiddenFiles) {
+			guard artistPath.hasDirectoryPath else {
+				continue
+			}
 			let artist = artistPath.lastPathComponent
 			var songs = Set<String>()
 			for songPath in try fileManager.contentsOfDirectory(at: artistPath,
-																includingPropertiesForKeys: [.nameKey],
+																includingPropertiesForKeys: [],
 																options: .skipsHiddenFiles) {
 				guard songPath.pathExtension == ext else {
 					continue
@@ -36,9 +43,9 @@ class BeatmapDatabase {
 			cachedTitles[artist] = songs
 		}
 	}
-		
-	func hasBeatmap(for song: SongResource) -> Bool {
-		return cachedTitles[song.artistName ?? unknownArtist]?.contains(song.title) ?? false
+	
+	func hasBeatmapForSong(title: String, artist: String?) -> Bool {
+		return cachedTitles[artist ?? unknownArtist]?.contains(title) ?? false
 	}
 	
 	private let unknownArtist = "Unknown Artist"
@@ -47,15 +54,26 @@ class BeatmapDatabase {
 		guard let title = beatmap.title else {
 			return
 		}
-		let artist = beatmap.artist ?? unknownArtist
 		let data = try exporter.export(beatmap: beatmap)
+		let url = try getBeatmapURL(title: title, artist: beatmap.artist, create: true)
+		try data.write(to: url, options: .atomic)
+		cachedTitles[beatmap.artist ?? unknownArtist, default: Set()].insert(title)
+		// TODO: Reserved characters like :/
+	}
+	
+	func getBeatmapURL(title: String, artist: String?, create: Bool) throws -> URL {
 		let artistPath = directory
-			.appendingPathComponent(artist, isDirectory: true)
-		let songPath = artistPath
+			.appendingPathComponent(artist ?? unknownArtist, isDirectory: true)
+		let url = artistPath
 			.appendingPathComponent(title, isDirectory: false)
 			.appendingPathExtension(ext)
-		try fileManager.createDirectory(at: artistPath, withIntermediateDirectories: true, attributes: nil)
-		try data.write(to: songPath, options: .atomic)
-		cachedTitles[artist, default: Set()].insert(title)
+		if create {
+			try fileManager.createDirectory(at: artistPath, withIntermediateDirectories: true, attributes: nil)
+		}
+		return url
+	}
+	
+	func loadBeatmapForSong(title: String, artist: String?) throws -> Beatmap {
+		return try importer.load(from: getBeatmapURL(title: title, artist: artist, create: false))
 	}
 }

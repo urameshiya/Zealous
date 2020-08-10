@@ -10,6 +10,7 @@ import SwiftUI
 import AVFoundation
 
 struct SongSelectionView: View {
+	let beatmapDatabase: BeatmapDatabase
 	let songs: [SongResource]
 	let onSelected: (SongResource) -> Void
 	@State var highlightedRow: Int = -1
@@ -53,6 +54,13 @@ struct SongSelectionView: View {
 		ScrollView(.vertical) {
 			HStack(spacing: 2) {
 				Column { i in
+					self.TextRow(
+						self.beatmapDatabase.hasBeatmapForSong(title: self.songs[i].title,
+															   artist: self.songs[i].artistName) ? "Y" : " ",
+						row: i)
+						.frame(width: 20, alignment: .center)
+				}
+				Column { i in
 					self.TextRow(self.songs[i].title, row: i)
 				}
 				Column { i in
@@ -70,9 +78,10 @@ struct SongSelectionView_Previews: PreviewProvider {
 		["Opp apal", "haapaapevlae"]
 	]
 	static var previews: some View {
-		SongSelectionView(songs: songs) { _ in
-			print("Selected")
-		}
+//		SongSelectionView(songs: songs) { _ in
+//			print("Selected")
+//		}
+		EmptyView()
 	}
 }
 
@@ -88,7 +97,7 @@ fileprivate struct Song: SongResource, ExpressibleByArrayLiteral {
 		artistName = elements[1]
 	}
 	
-	func load() throws -> AVPlayerItem {
+	func loadPlayerItem() throws -> AVPlayerItem {
 		throw SongResourceError.unavailable
 	}
 }

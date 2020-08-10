@@ -140,6 +140,12 @@ class MainViewController: NSViewController, SongPlayerDelegate {
 	override var acceptsFirstResponder: Bool { true }
 	
 	var beatmap: Beatmap = Beatmap()
+	
+	let beatmapDatabase = try! BeatmapDatabase(directory: FileManager.default.url(for: .documentDirectory,
+																				  in: .userDomainMask,
+																				  appropriateFor: nil,
+																				  create: true)
+		.appendingPathComponent("Zeal/Beatmaps"))
 		
 	override func keyDown(with event: NSEvent) {
 //		print("Keydown \(event.characters)")
@@ -177,13 +183,38 @@ class MainViewController: NSViewController, SongPlayerDelegate {
 											 markingController: songMarkingController,
 											 player: player))
 	}
-	
+		
 	func didSelect(song: SongResource) {
 		if let host = self.selectionViewHost {
 			self.dismiss(host)
 		}
+		
+		if beatmapDatabase.hasBeatmapForSong(title: song.title, artist: song.artistName) {
+			let alert = NSAlert()
+			alert.informativeText = "Open existing beatmap in database?"
+			alert.addButton(withTitle: "Yes")
+			alert.addButton(withTitle: "No")
+			let result = alert.runModal()
+			switch result {
+			case .alertFirstButtonReturn:
+				do {
+					let beatmap = try beatmapDatabase.loadBeatmapForSong(title: song.title,
+														   artist: song.artistName)
+					self.beatmap.lyricSeparator = beatmap.lyricSeparator
+					self.beatmap.songMarkers = beatmap.songMarkers
+				} catch {
+					// TODO: Throw Error
+				}
+			default:
+				break
+			}
+		}
+		
 		do {
-			try player.loadSong(from: song.load())
+			beatmap.title = song.title
+			beatmap.artist = song.artistName
+			beatmap.player = player
+			try player.loadSong(from: song.loadPlayerItem())
 			mainView.update(with: song)
 		} catch {
 			print("Unable to load song")
@@ -194,7 +225,13 @@ class MainViewController: NSViewController, SongPlayerDelegate {
 	// MARK: - View Delegate
 	
 	@objc func selectDidClick() {
-		let selectionView = SongSelectionView(songs: musicApp.allSongs) { [weak self] song in
+		do {
+			try beatmapDatabase.reload()
+		} catch {
+			print("Unable to reload beatmap database: \(error)")
+		}
+		
+		let selectionView = SongSelectionView(beatmapDatabase: beatmapDatabase, songs: musicApp.allSongs) { [weak self] song in
 			self?.didSelect(song: song)
 		}
 		
@@ -204,10 +241,14 @@ class MainViewController: NSViewController, SongPlayerDelegate {
 	}
 	
 	@objc func export() {
-		let outURL = URL(fileURLWithPath: "Documents/test.json")
+		do {
+			try beatmapDatabase.save(beatmap: beatmap)
+		} catch {
+			print("Unable to save beatmap: \(error)")
+		}
 	}
 	
-	var testURL = URL(fileURLWithPath: "Documents/test.json")
+	var testURL = URL(fileURLWithPath: "/Users/cvu/Downloads/test.json")
 	
 	@objc func loadBeatmap() {
 		let newBeatmap = try! LyricImporter().load(from: testURL)

@@ -18,7 +18,7 @@ protocol SongResource {
 	var artistName: String? { get }
 	var artworkImage: NSImage? { get }
 	
-	func load() throws -> AVPlayerItem
+	func loadPlayerItem() throws -> AVPlayerItem
 }
 
 class iTunesService {
@@ -40,7 +40,7 @@ extension ITLibMediaItem: SongResource {
 		return artwork?.image
 	}
 	
-	func load() throws -> AVPlayerItem {
+	func loadPlayerItem() throws -> AVPlayerItem {
 		guard let location = location else {
 			throw SongResourceError.unavailable
 		}
