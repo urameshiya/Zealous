@@ -8,12 +8,56 @@
 
 import SwiftUI
 import AVFoundation
+import Combine
+
+final class SearchProcessor: ObservableObject {
+	@Published var results: [Int]
+	private let querySubject = CurrentValueSubject<String, Never>("")
+	private(set) var query: Binding<String>!
+	
+	let songs: [SongResource]
+	private var cancellable: AnyCancellable!
+	
+	init(songs: [SongResource]) {
+		self.songs = songs
+		results = [Int](0..<songs.count)
+		query = .init(get: { self.querySubject.value },
+					  set: { (query) in
+						self.querySubject.send(query)
+		})
+		cancellable = querySubject
+//			.debounce(for: 0.3, scheduler: DispatchQueue.global(qos: .userInteractive))
+			.map { query in
+				// TODO: make search items lowercased
+				return self.songs
+					.enumerated()
+					.filter { i, song in
+						song.title.starts(with: query)
+							|| song.artistName?.starts(with: query) ?? false
+				}.map { $0.offset }
+			}.receive(on: DispatchQueue.main)
+			.sink(receiveValue: { (results) in
+				self.results = results
+			})
+		
+	}
+}
 
 struct SongSelectionView: View {
 	let beatmapDatabase: BeatmapDatabase
 	let songs: [SongResource]
 	let onSelected: (SongResource) -> Void
 	@State var highlightedRow: Int = -1
+	@ObservedObject var search: SearchProcessor
+	
+	init(beatmapDatabase: BeatmapDatabase,
+		 songs: [SongResource],
+		 onSelected: @escaping (SongResource) -> Void) {
+		search = .init(songs: songs)
+		self.beatmapDatabase = beatmapDatabase
+		self.songs = songs
+		self.onSelected = onSelected
+	}
 	
 	var body: some View {
 		VStack(alignment: .leading, spacing: 2) {
@@ -21,6 +65,7 @@ struct SongSelectionView: View {
 //				Text("Song Title")
 //				Text("Artist")
 //			}
+			TextField("Search", text: search.query)
 			SongList()
 		}
 	}
@@ -28,7 +73,7 @@ struct SongSelectionView: View {
 	func Column<Content>(@ViewBuilder content: @escaping (Int) -> Content)
 		-> some View where Content: View {
 			VStack(alignment: .leading) {
-				ForEach(0..<songs.count) { i in
+				ForEach(search.results, id: \.self) { i in
 					content(i)
 				}
 			}
