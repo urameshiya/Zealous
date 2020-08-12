@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		F00635E224C3EE8F001D1392 /* LyricMarkerPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00635E124C3EE8F001D1392 /* LyricMarkerPresentation.swift */; };
 		F00635E424C4AE05001D1392 /* NSLayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00635E324C4AE05001D1392 /* NSLayoutManager.swift */; };
+		F04DB9A624E4359100DF4C16 /* SeachProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04DB9A524E4359100DF4C16 /* SeachProcessor.swift */; };
 		F051E7A424B134E000CCD591 /* ColorAlternator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F051E7A324B134E000CCD591 /* ColorAlternator.swift */; };
 		F051E7A924B35F0600CCD591 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F051E7A824B35F0600CCD591 /* MainViewController.swift */; };
 		F051E7AB24B3C76D00CCD591 /* AudioBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F051E7AA24B3C76D00CCD591 /* AudioBarView.swift */; };
@@ -50,6 +51,7 @@
 /* Begin PBXFileReference section */
 		F00635E124C3EE8F001D1392 /* LyricMarkerPresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricMarkerPresentation.swift; sourceTree = "<group>"; };
 		F00635E324C4AE05001D1392 /* NSLayoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSLayoutManager.swift; sourceTree = "<group>"; };
+		F04DB9A524E4359100DF4C16 /* SeachProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeachProcessor.swift; sourceTree = "<group>"; };
 		F051E7A324B134E000CCD591 /* ColorAlternator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorAlternator.swift; sourceTree = "<group>"; };
 		F051E7A824B35F0600CCD591 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		F051E7AA24B3C76D00CCD591 /* AudioBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioBarView.swift; sourceTree = "<group>"; };
@@ -201,6 +203,7 @@
 			children = (
 				F051E7AA24B3C76D00CCD591 /* AudioBarView.swift */,
 				F0A981CE24BBBC5300F229AC /* SongSelectionView.swift */,
+				F04DB9A524E4359100DF4C16 /* SeachProcessor.swift */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -331,6 +334,7 @@
 				F08FF18E24A3C0D200A29C71 /* LyricMarkingView.swift in Sources */,
 				F0A981CF24BBBC5300F229AC /* SongSelectionView.swift in Sources */,
 				F0A981C624BB242E00F229AC /* LyricExporter.swift in Sources */,
+				F04DB9A624E4359100DF4C16 /* SeachProcessor.swift in Sources */,
 				F051E7A424B134E000CCD591 /* ColorAlternator.swift in Sources */,
 				F08EC31224C05321000DCA32 /* String.swift in Sources */,
 				F0AAB04224BCC16E00FAC35F /* SongMarkingController.swift in Sources */,
