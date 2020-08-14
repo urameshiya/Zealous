@@ -15,8 +15,6 @@ protocol SongPlayerDelegate: class {
 
 final class SongPlayer: NSObject, ObservableObject {
 	@Published private(set) var timeElapsed: Double = 0
-	let didSeek: AnyPublisher<SongMarker, Never>
-	private var seekSubject = PassthroughSubject<SongMarker, Never>()
 	private(set) var duration: Double = .infinity
 	var fractionElapsed: Double {
 		return timeElapsed / duration
@@ -28,7 +26,6 @@ final class SongPlayer: NSObject, ObservableObject {
 	
 	override init() {
 		player = AVPlayer(playerItem: nil)
-		didSeek = seekSubject.eraseToAnyPublisher()
 		super.init()
 		observerToken = player.addPeriodicTimeObserver(forInterval: SongPlayer.updateInterval,
 													   queue: nil) { [weak self] timeElapsed in
@@ -38,11 +35,11 @@ final class SongPlayer: NSObject, ObservableObject {
 	
 	func seek(to marker: SongMarker) {
 		seek(to: marker.time)
-		seekSubject.send(marker)
 	}
 	
 	private func seek(to time: CGFloat) {
-		player.seek(to: .init(seconds: Double(time), preferredTimescale: 1))
+		player.seek(to: .init(seconds: Double(time), preferredTimescale: Self.updateInterval.timescale),
+					toleranceBefore: .zero, toleranceAfter: .zero)
 	}
 	
 	func loadSong(from url: URL) {

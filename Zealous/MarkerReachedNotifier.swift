@@ -18,18 +18,8 @@ class MarkerReachedNotifier: Publisher {
 	var nextMarker: SongMarker = .init(time: 0.0)
 	
 	private lazy var sharedPublisher = player.$timeElapsed
-		.combineLatest(Just(nextMarker).append(player.didSeek))
-		.map {
-			// So that it doesn't highlight the segment previous to
-			// the intended target because AVPlayer.seek() is not accurate
-			let (timeElapsed, seekMarker) = $0
-			let time = CGFloat(timeElapsed)
-			if time < seekMarker.time {
-				return seekMarker.time
-			}
-			return time
-		}.map { [unowned self] (timeElapsed) in
-			return self.getMarker(at: timeElapsed)
+		.map { [unowned self] (timeElapsed) in
+			return self.getMarker(at: CGFloat(timeElapsed))
 		}.filter { [unowned self] result in
 			defer {
 				self.lastPosition = result?.position
