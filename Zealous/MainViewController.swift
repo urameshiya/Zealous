@@ -20,7 +20,6 @@ private class MainView: NSView {
 	let editButton: NSButton
 	let exportButton: NSButton
 	let markerModeButton: NSButton
-	let loadBeatmapButton: NSButton
 	let buttonStack: NSStackView
 	let masterStack: NSStackView
 	var audioBarView: NSHostingView<AnyView>?
@@ -36,11 +35,8 @@ private class MainView: NSView {
 								action: #selector(Controller.export))
 		editButton = NSButton(title: "Edit lyric", target: nil, action: nil)
 		markerModeButton = NSButton(title: "Marker Mode", target: nil, action: nil)
-		loadBeatmapButton = NSButton(title: "Load Beatmap",
-									 target: controller,
-									 action: #selector(Controller.loadBeatmap))
 		artworkView = .init()
-		buttonStack = .init(views: [artworkView, selectButton, loadBeatmapButton,
+		buttonStack = .init(views: [artworkView, selectButton,
 									exportButton, editButton, markerModeButton])
 		buttonStack.orientation = .vertical
 		lyricView = .init(beatmap: controller.beatmap)
@@ -246,16 +242,6 @@ class MainViewController: NSViewController, SongPlayerDelegate {
 		} catch {
 			print("Unable to save beatmap: \(error)")
 		}
-	}
-	
-	var testURL = URL(fileURLWithPath: "/Users/cvu/Downloads/test.json")
-	
-	@objc func loadBeatmap() {
-		let newBeatmap = try! LyricImporter().load(from: testURL)
-		beatmap.lyricSeparator = newBeatmap.lyricSeparator
-		beatmap.songMarkers = newBeatmap.songMarkers
-		beatmap.player = player
-		reloadAudioBar()
 	}
 	
 	@objc func play() {

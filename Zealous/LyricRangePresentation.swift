@@ -13,13 +13,17 @@ final class LyricRangePresentation: LyricMarkingViewPresentation {
 	var lyric: String { lyricView.beatmap.lyricSeparator!.lyric }
 	let colorPicker = ColorAlternator(colorPool: [#colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1), #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1), #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)])
 	let rangeContainer: NSView
-	fileprivate var highlightViews = [NSView]()
+	fileprivate var highlightViews = [HighlightView]()
 	private var cancellables = [AnyCancellable]()
+	let hitTestView: HitTestForwardingView
 
 	init(view: LyricMarkingView) {
 		self.lyricView = view
 		rangeContainer = FlippedNSView(frame: view.textContainerView.bounds)
 		rangeContainer.autoresizingMask = [.width, .height]
+		hitTestView = HitTestForwardingView(target: rangeContainer)
+		hitTestView.frame = lyricView.frame
+		hitTestView.autoresizingMask = [.width, .height]
 		let beatmap = view.beatmap
 		
 		beatmap.$lyricSeparator.sink { [unowned self] _ in
@@ -36,26 +40,22 @@ final class LyricRangePresentation: LyricMarkingViewPresentation {
 		}.store(in: &cancellables)
 	}
 	
-	func addHighlightView(over segment: Range<String.Index>, color: NSColor) {
+	func addHighlightView(over segment: Range<String.Index>, color: NSColor, position: Int) {
 		let range = NSRange(segment, in:lyric)
 		let frame = lyricView.layoutManager.boundingRect(forGlyphRange: range, in: lyricView.textContainer)
-		let highlight = NSView(frame: frame)
-		highlight.wantsLayer = true
-		let hLayer = highlight.layer!
-		hLayer.backgroundColor = color.cgColor
-		hLayer.opacity = 0.3
-		hLayer.cornerRadius = 4
-		hLayer.masksToBounds = true
+		let highlight = HighlightView(frame: frame, color: color, position: position, presentation: self)
 		rangeContainer.addSubview(highlight)
 		highlightViews.append(highlight)
 	}
 	
 	func show() {
 		lyricView.textContainerView.addSubview(rangeContainer, positioned: .below, relativeTo: lyricView.textView)
+		lyricView.addSubview(hitTestView)
 	}
 	
 	func cleanup() {
 		rangeContainer.removeFromSuperview()
+		hitTestView.removeFromSuperview()
 	}
 	
 	var playAlong: LyricPlayAlong?
@@ -69,10 +69,65 @@ final class LyricRangePresentation: LyricMarkingViewPresentation {
 			old.removeFromSuperview()
 		}
 		highlightViews = .init()
-		for range in ranges {
+		for i in 0..<ranges.count {
+			let range = ranges[i]
 			let color = colorPicker.nextColor()
-			addHighlightView(over: range, color: color)
+			addHighlightView(over: range, color: color, position: i)
 		}
+	}
+	
+	func highlightDidClick(at position: Int) {
+		let beatmap = lyricView.beatmap
+		beatmap.player?.seek(to: beatmap.songMarkers[position])
+	}
+}
+
+class HitTestForwardingView: NSView {
+	unowned let target: NSView
+	
+	init(target: NSView) {
+		self.target = target
+		super.init(frame: .zero)
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+	
+	override func hitTest(_ point: NSPoint) -> NSView? {
+		return target.hitTest(convert(point, to: target.superview))
+	}
+}
+
+private class HighlightView: NSView {
+	unowned let presentation: LyricRangePresentation
+	let position: Int
+	
+	init(frame frameRect: NSRect,
+		 color: NSColor,
+		 position: Int,
+		 presentation: LyricRangePresentation)
+	{
+		self.presentation = presentation
+		self.position = position
+		super.init(frame: frameRect)
+		wantsLayer = true
+		let hLayer = layer!
+		hLayer.backgroundColor = color.cgColor
+		hLayer.opacity = 0.3
+		hLayer.cornerRadius = 4
+		hLayer.masksToBounds = true
+		
+		let clickRecognizer = NSClickGestureRecognizer(target: self, action: #selector(didClick(_:)))
+		addGestureRecognizer(clickRecognizer)
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+	
+	@objc func didClick(_ gesture: NSClickGestureRecognizer) {
+		presentation.highlightDidClick(at: position)
 	}
 }
 

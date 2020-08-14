@@ -10,6 +10,7 @@
 		F00635E224C3EE8F001D1392 /* LyricMarkerPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00635E124C3EE8F001D1392 /* LyricMarkerPresentation.swift */; };
 		F00635E424C4AE05001D1392 /* NSLayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00635E324C4AE05001D1392 /* NSLayoutManager.swift */; };
 		F04DB9A624E4359100DF4C16 /* SeachProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04DB9A524E4359100DF4C16 /* SeachProcessor.swift */; };
+		F04DB9AA24E6CA6100DF4C16 /* MarkerReachedNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04DB9A924E6CA6100DF4C16 /* MarkerReachedNotifier.swift */; };
 		F051E7A424B134E000CCD591 /* ColorAlternator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F051E7A324B134E000CCD591 /* ColorAlternator.swift */; };
 		F051E7A924B35F0600CCD591 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F051E7A824B35F0600CCD591 /* MainViewController.swift */; };
 		F051E7AB24B3C76D00CCD591 /* AudioBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F051E7AA24B3C76D00CCD591 /* AudioBarView.swift */; };
@@ -52,6 +53,7 @@
 		F00635E124C3EE8F001D1392 /* LyricMarkerPresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricMarkerPresentation.swift; sourceTree = "<group>"; };
 		F00635E324C4AE05001D1392 /* NSLayoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSLayoutManager.swift; sourceTree = "<group>"; };
 		F04DB9A524E4359100DF4C16 /* SeachProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeachProcessor.swift; sourceTree = "<group>"; };
+		F04DB9A924E6CA6100DF4C16 /* MarkerReachedNotifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerReachedNotifier.swift; sourceTree = "<group>"; };
 		F051E7A324B134E000CCD591 /* ColorAlternator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorAlternator.swift; sourceTree = "<group>"; };
 		F051E7A824B35F0600CCD591 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		F051E7AA24B3C76D00CCD591 /* AudioBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioBarView.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 				F051E7B124BB208A00CCD591 /* Extensions */,
 				F051E7A824B35F0600CCD591 /* MainViewController.swift */,
 				F0AAB04124BCC16E00FAC35F /* SongMarkingController.swift */,
+				F04DB9A924E6CA6100DF4C16 /* MarkerReachedNotifier.swift */,
 				F0A981CB24BB8A9000F229AC /* iTunes */,
 				F0A981C524BB242D00F229AC /* LyricExporter.swift */,
 				F051E7A324B134E000CCD591 /* ColorAlternator.swift */,
@@ -328,6 +331,7 @@
 				F08A7F4724C527D5001F76C0 /* LyricGroupings.swift in Sources */,
 				F08FF1A524A5407900A29C71 /* Tree.swift in Sources */,
 				F00635E424C4AE05001D1392 /* NSLayoutManager.swift in Sources */,
+				F04DB9AA24E6CA6100DF4C16 /* MarkerReachedNotifier.swift in Sources */,
 				F051E7AC24B6375700CCD591 /* ContentView.swift in Sources */,
 				F08A7F4B24C8F141001F76C0 /* Collection.swift in Sources */,
 				F08FF17724A3982800A29C71 /* AppDelegate.swift in Sources */,
