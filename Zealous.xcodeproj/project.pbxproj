@@ -30,7 +30,6 @@
 		F08FF18A24A3A05200A29C71 /* Lyrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08FF18924A3A05200A29C71 /* Lyrics.swift */; };
 		F08FF18E24A3C0D200A29C71 /* LyricMarkingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08FF18D24A3C0D200A29C71 /* LyricMarkingView.swift */; };
 		F08FF1A524A5407900A29C71 /* Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08FF1A424A5407900A29C71 /* Tree.swift */; };
-		F0A4ED6A24E9911A002829F4 /* SongMarkingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0AAB04124BCC16E00FAC35F /* SongMarkingController.swift */; };
 		F0A7048024DB2C920060F988 /* BeatmapDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A7047F24DB2C920060F988 /* BeatmapDatabase.swift */; };
 		F0A7048724DE18050060F988 /* BeatmapDatabaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A7048124DE0C830060F988 /* BeatmapDatabaseTest.swift */; };
 		F0A981C624BB242E00F229AC /* LyricExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A981C524BB242D00F229AC /* LyricExporter.swift */; };
@@ -88,7 +87,6 @@
 		F0A981CC24BB8A9E00F229AC /* iTunes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iTunes.h; sourceTree = "<group>"; };
 		F0A981CD24BB8AAA00F229AC /* Zealous-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Zealous-Bridging-Header.h"; sourceTree = "<group>"; };
 		F0A981CE24BBBC5300F229AC /* SongSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongSelectionView.swift; sourceTree = "<group>"; };
-		F0AAB04124BCC16E00FAC35F /* SongMarkingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongMarkingController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,7 +115,6 @@
 				F00635E124C3EE8F001D1392 /* LyricMarkerPresentation.swift */,
 				F08A7F4824C7533E001F76C0 /* LyricRangePresentation.swift */,
 				F051E7A324B134E000CCD591 /* ColorAlternator.swift */,
-				F0AAB04124BCC16E00FAC35F /* SongMarkingController.swift */,
 				F04DB9A924E6CA6100DF4C16 /* MarkerReachedNotifier.swift */,
 				F051E7AF24B8C0F100CCD591 /* SongPlayer.swift */,
 			);
@@ -361,7 +358,6 @@
 			files = (
 				F051E7A924B35F0600CCD591 /* MainViewController.swift in Sources */,
 				F0A981CA24BB8A8B00F229AC /* iTunes.swift in Sources */,
-				F0A4ED6A24E9911A002829F4 /* SongMarkingController.swift in Sources */,
 				F051E7B024B8C0F100CCD591 /* SongPlayer.swift in Sources */,
 				F08FF18A24A3A05200A29C71 /* Lyrics.swift in Sources */,
 				F08A7F4D24CCBA9E001F76C0 /* Beatmap.swift in Sources */,

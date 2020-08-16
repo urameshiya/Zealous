@@ -68,11 +68,11 @@ struct Bar: View {
 
 struct AudioBarViewUI: View {
 	@State var axis: Axis
-	@ObservedObject var markingController: SongMarkingController
+	@ObservedObject var beatmap: Beatmap
 	var player: SongPlayer
 	
 	var body: some View {
-		Bar(axis: self.axis, player: player, markers: markingController.beatmap.songMarkers)
+		Bar(axis: self.axis, player: player, markers: beatmap.songMarkers)
 			.frame(axis: self.axis, minorLength: 30)
 			.padding([.vertical], 20)
 	}
@@ -82,7 +82,7 @@ struct AudioBar_Previews: PreviewProvider {
 	static let beatmap = Beatmap()
 	static let player = SongPlayer()
     static var previews: some View {
-		AudioBarViewUI(axis: .vertical, markingController: SongMarkingController(beatmap: beatmap, player: player), player: player)
+		AudioBarViewUI(axis: .vertical, beatmap: beatmap, player: player)
 			.frame(width: 100, height: 300)
     }
 }

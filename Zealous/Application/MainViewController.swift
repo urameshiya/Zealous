@@ -131,7 +131,6 @@ class MainViewController: NSViewController, SongPlayerDelegate {
 	var musicApp: iTunesService!
 	
 	var selectionViewHost: NSViewController!
-	var songMarkingController: SongMarkingController?
 	
 	override var acceptsFirstResponder: Bool { true }
 	
@@ -149,7 +148,7 @@ class MainViewController: NSViewController, SongPlayerDelegate {
 		case " ":
 			player.toggle()
 		case "a", "s", "d":
-			songMarkingController?.markCurrent()
+			beatmap.markCurrent()
 		case Character.delete:
 			// TODO: Delete
 			print("Deleted")
@@ -164,7 +163,6 @@ class MainViewController: NSViewController, SongPlayerDelegate {
 		case .failed:
 			print("Failed to load file")
 		case .readyToPlay:
-			songMarkingController = .init(beatmap: beatmap, player: player)
 			reloadAudioBar()
 		default:
 			player.pause()
@@ -172,11 +170,8 @@ class MainViewController: NSViewController, SongPlayerDelegate {
 	}
 	
 	func reloadAudioBar() {
-		guard let songMarkingController = songMarkingController else {
-			return
-		}
 		mainView.showAudioBar(AudioBarViewUI(axis: .vertical,
-											 markingController: songMarkingController,
+											 beatmap: beatmap,
 											 player: player))
 	}
 		
