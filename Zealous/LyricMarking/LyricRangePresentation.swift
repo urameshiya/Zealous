@@ -7,6 +7,7 @@
 //
 
 import Combine
+import SwiftUI
 
 final class LyricRangePresentation: LyricMarkingViewPresentation {
 	unowned let lyricView: LyricMarkingView
@@ -78,7 +79,22 @@ final class LyricRangePresentation: LyricMarkingViewPresentation {
 	
 	func highlightDidClick(at position: Int) {
 		let beatmap = lyricView.beatmap
+
+		let view = highlightViews[position]
+		let popover = NSPopover()
+		popover.contentViewController = NSHostingController(rootView: FinetuningPopover(seekHandler: { (offset) in
+			if beatmap.nudgeSongMarker(at: position, by: offset) {
+				beatmap.player?.seek(to: beatmap.songMarkers[position])
+				beatmap.player?.play()
+			} else {
+				// TODO: Play error sound
+			}
+		}))
+		popover.behavior = .transient
+		popover.show(relativeTo: view.bounds, of: view, preferredEdge: .minY)
+		
 		beatmap.player?.seek(to: beatmap.songMarkers[position])
+		beatmap.player?.play()
 	}
 }
 
@@ -136,10 +152,14 @@ final class LyricPlayAlong {
 	var currentHighlighted: Int?
 	var cancellable: Any!
 	
+	var beatmap: Beatmap { presentation.lyricView.beatmap }
+	
 	init(presentation: LyricRangePresentation, notifier: MarkerReachedNotifier) {
 		self.presentation = presentation
-		cancellable = notifier.sink(receiveValue: { [unowned self] (value) in
-			self.highlight(at: value?.position)
+		cancellable = notifier
+			.receive(on: DispatchQueue.main)
+			.sink(receiveValue: { [unowned self] (value) in
+				self.highlight(at: value?.position)
 		})
 	}
 	

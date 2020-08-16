@@ -11,6 +11,7 @@
 		F00635E424C4AE05001D1392 /* NSLayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00635E324C4AE05001D1392 /* NSLayoutManager.swift */; };
 		F04DB9A624E4359100DF4C16 /* SeachProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04DB9A524E4359100DF4C16 /* SeachProcessor.swift */; };
 		F04DB9AA24E6CA6100DF4C16 /* MarkerReachedNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04DB9A924E6CA6100DF4C16 /* MarkerReachedNotifier.swift */; };
+		F04DB9B324E84FD000DF4C16 /* FinetuningPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04DB9B224E84FD000DF4C16 /* FinetuningPopover.swift */; };
 		F051E7A424B134E000CCD591 /* ColorAlternator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F051E7A324B134E000CCD591 /* ColorAlternator.swift */; };
 		F051E7A924B35F0600CCD591 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F051E7A824B35F0600CCD591 /* MainViewController.swift */; };
 		F051E7AB24B3C76D00CCD591 /* AudioBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F051E7AA24B3C76D00CCD591 /* AudioBarView.swift */; };
@@ -29,12 +30,12 @@
 		F08FF18A24A3A05200A29C71 /* Lyrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08FF18924A3A05200A29C71 /* Lyrics.swift */; };
 		F08FF18E24A3C0D200A29C71 /* LyricMarkingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08FF18D24A3C0D200A29C71 /* LyricMarkingView.swift */; };
 		F08FF1A524A5407900A29C71 /* Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08FF1A424A5407900A29C71 /* Tree.swift */; };
+		F0A4ED6A24E9911A002829F4 /* SongMarkingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0AAB04124BCC16E00FAC35F /* SongMarkingController.swift */; };
 		F0A7048024DB2C920060F988 /* BeatmapDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A7047F24DB2C920060F988 /* BeatmapDatabase.swift */; };
 		F0A7048724DE18050060F988 /* BeatmapDatabaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A7048124DE0C830060F988 /* BeatmapDatabaseTest.swift */; };
 		F0A981C624BB242E00F229AC /* LyricExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A981C524BB242D00F229AC /* LyricExporter.swift */; };
 		F0A981CA24BB8A8B00F229AC /* iTunes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A981C924BB8A8B00F229AC /* iTunes.swift */; };
 		F0A981CF24BBBC5300F229AC /* SongSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A981CE24BBBC5300F229AC /* SongSelectionView.swift */; };
-		F0AAB04224BCC16E00FAC35F /* SongMarkingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0AAB04124BCC16E00FAC35F /* SongMarkingController.swift */; };
 		F0AE327324D64B980083D46D /* ZealLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = F0AE327224D64B980083D46D /* ZealLibrary */; };
 /* End PBXBuildFile section */
 
@@ -53,6 +54,7 @@
 		F00635E324C4AE05001D1392 /* NSLayoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSLayoutManager.swift; sourceTree = "<group>"; };
 		F04DB9A524E4359100DF4C16 /* SeachProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeachProcessor.swift; sourceTree = "<group>"; };
 		F04DB9A924E6CA6100DF4C16 /* MarkerReachedNotifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerReachedNotifier.swift; sourceTree = "<group>"; };
+		F04DB9B224E84FD000DF4C16 /* FinetuningPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinetuningPopover.swift; sourceTree = "<group>"; };
 		F051E7A324B134E000CCD591 /* ColorAlternator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorAlternator.swift; sourceTree = "<group>"; };
 		F051E7A824B35F0600CCD591 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		F051E7AA24B3C76D00CCD591 /* AudioBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioBarView.swift; sourceTree = "<group>"; };
@@ -242,6 +244,7 @@
 			isa = PBXGroup;
 			children = (
 				F051E7AA24B3C76D00CCD591 /* AudioBarView.swift */,
+				F04DB9B224E84FD000DF4C16 /* FinetuningPopover.swift */,
 				F0A981CE24BBBC5300F229AC /* SongSelectionView.swift */,
 				F04DB9A524E4359100DF4C16 /* SeachProcessor.swift */,
 			);
@@ -358,6 +361,7 @@
 			files = (
 				F051E7A924B35F0600CCD591 /* MainViewController.swift in Sources */,
 				F0A981CA24BB8A8B00F229AC /* iTunes.swift in Sources */,
+				F0A4ED6A24E9911A002829F4 /* SongMarkingController.swift in Sources */,
 				F051E7B024B8C0F100CCD591 /* SongPlayer.swift in Sources */,
 				F08FF18A24A3A05200A29C71 /* Lyrics.swift in Sources */,
 				F08A7F4D24CCBA9E001F76C0 /* Beatmap.swift in Sources */,
@@ -376,8 +380,8 @@
 				F0A981C624BB242E00F229AC /* LyricExporter.swift in Sources */,
 				F04DB9A624E4359100DF4C16 /* SeachProcessor.swift in Sources */,
 				F051E7A424B134E000CCD591 /* ColorAlternator.swift in Sources */,
+				F04DB9B324E84FD000DF4C16 /* FinetuningPopover.swift in Sources */,
 				F08EC31224C05321000DCA32 /* String.swift in Sources */,
-				F0AAB04224BCC16E00FAC35F /* SongMarkingController.swift in Sources */,
 				F0A7048024DB2C920060F988 /* BeatmapDatabase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

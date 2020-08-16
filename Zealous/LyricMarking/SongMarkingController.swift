@@ -8,14 +8,6 @@
 
 import Combine
 
-struct SongMarker: Comparable {
-	var time: CGFloat
-	
-	static func < (lhs: SongMarker, rhs: SongMarker) -> Bool {
-		lhs.time < rhs.time
-	}
-}
-
 class SongMarkingController: ObservableObject {
 	let beatmap: Beatmap
 	
