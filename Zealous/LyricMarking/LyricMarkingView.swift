@@ -85,6 +85,7 @@ class LyricMarkingView: NSView {
 		textView.string = lyric
 		textView.isEditable = false
 		textView.isSelectable = false
+		textView.isRichText = true
 	}
 	
 	required init?(coder: NSCoder) {
