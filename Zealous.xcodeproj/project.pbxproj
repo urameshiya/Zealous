@@ -14,7 +14,6 @@
 		F04DB9B324E84FD000DF4C16 /* FinetuningPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04DB9B224E84FD000DF4C16 /* FinetuningPopover.swift */; };
 		F051E7A424B134E000CCD591 /* ColorAlternator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F051E7A324B134E000CCD591 /* ColorAlternator.swift */; };
 		F051E7A924B35F0600CCD591 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F051E7A824B35F0600CCD591 /* MainViewController.swift */; };
-		F051E7AB24B3C76D00CCD591 /* AudioBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F051E7AA24B3C76D00CCD591 /* AudioBarView.swift */; };
 		F051E7AE24B7DDD500CCD591 /* SwiftUI+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F051E7AD24B7DDD400CCD591 /* SwiftUI+Ext.swift */; };
 		F051E7B024B8C0F100CCD591 /* SongPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F051E7AF24B8C0F100CCD591 /* SongPlayer.swift */; };
 		F08A7F4724C527D5001F76C0 /* LyricGroupings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08A7F4624C527D5001F76C0 /* LyricGroupings.swift */; };
@@ -30,6 +29,7 @@
 		F08FF18A24A3A05200A29C71 /* Lyrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08FF18924A3A05200A29C71 /* Lyrics.swift */; };
 		F08FF18E24A3C0D200A29C71 /* LyricMarkingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08FF18D24A3C0D200A29C71 /* LyricMarkingView.swift */; };
 		F08FF1A524A5407900A29C71 /* Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08FF1A424A5407900A29C71 /* Tree.swift */; };
+		F0A4ED7524EF0743002829F4 /* SongMarkerList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A4ED7424EF0743002829F4 /* SongMarkerList.swift */; };
 		F0A7048024DB2C920060F988 /* BeatmapDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A7047F24DB2C920060F988 /* BeatmapDatabase.swift */; };
 		F0A7048724DE18050060F988 /* BeatmapDatabaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A7048124DE0C830060F988 /* BeatmapDatabaseTest.swift */; };
 		F0A981C624BB242E00F229AC /* LyricExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A981C524BB242D00F229AC /* LyricExporter.swift */; };
@@ -56,7 +56,6 @@
 		F04DB9B224E84FD000DF4C16 /* FinetuningPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinetuningPopover.swift; sourceTree = "<group>"; };
 		F051E7A324B134E000CCD591 /* ColorAlternator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorAlternator.swift; sourceTree = "<group>"; };
 		F051E7A824B35F0600CCD591 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		F051E7AA24B3C76D00CCD591 /* AudioBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioBarView.swift; sourceTree = "<group>"; };
 		F051E7AD24B7DDD400CCD591 /* SwiftUI+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Ext.swift"; sourceTree = "<group>"; };
 		F051E7AF24B8C0F100CCD591 /* SongPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongPlayer.swift; sourceTree = "<group>"; };
 		F08A7F4624C527D5001F76C0 /* LyricGroupings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricGroupings.swift; sourceTree = "<group>"; };
@@ -80,6 +79,7 @@
 		F08FF19A24A4255B00A29C71 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F08FF1A424A5407900A29C71 /* Tree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tree.swift; sourceTree = "<group>"; };
 		F08FF1A624A566EF00A29C71 /* TreeTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeTest.swift; sourceTree = "<group>"; };
+		F0A4ED7424EF0743002829F4 /* SongMarkerList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongMarkerList.swift; sourceTree = "<group>"; };
 		F0A7047F24DB2C920060F988 /* BeatmapDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeatmapDatabase.swift; sourceTree = "<group>"; };
 		F0A7048124DE0C830060F988 /* BeatmapDatabaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeatmapDatabaseTest.swift; sourceTree = "<group>"; };
 		F0A981C524BB242D00F229AC /* LyricExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricExporter.swift; sourceTree = "<group>"; };
@@ -195,6 +195,7 @@
 				F04DB9AF24E76EEE00DF4C16 /* Models */,
 				F04DB9AC24E76EA200DF4C16 /* Database */,
 				F04DB9B124E76F4E00DF4C16 /* DataStructures */,
+				F0A4ED7324EF05BF002829F4 /* SongMarking */,
 				F04DB9AB24E766C600DF4C16 /* LyricMarking */,
 				F0A981D024BBBC7D00F229AC /* SwiftUI */,
 				F051E7B124BB208A00CCD591 /* Extensions */,
@@ -227,6 +228,14 @@
 			path = ZealousTests;
 			sourceTree = "<group>";
 		};
+		F0A4ED7324EF05BF002829F4 /* SongMarking */ = {
+			isa = PBXGroup;
+			children = (
+				F0A4ED7424EF0743002829F4 /* SongMarkerList.swift */,
+			);
+			path = SongMarking;
+			sourceTree = "<group>";
+		};
 		F0A981CB24BB8A9000F229AC /* iTunes */ = {
 			isa = PBXGroup;
 			children = (
@@ -240,7 +249,6 @@
 		F0A981D024BBBC7D00F229AC /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
-				F051E7AA24B3C76D00CCD591 /* AudioBarView.swift */,
 				F04DB9B224E84FD000DF4C16 /* FinetuningPopover.swift */,
 				F0A981CE24BBBC5300F229AC /* SongSelectionView.swift */,
 				F04DB9A524E4359100DF4C16 /* SeachProcessor.swift */,
@@ -363,7 +371,6 @@
 				F08A7F4D24CCBA9E001F76C0 /* Beatmap.swift in Sources */,
 				F08A7F4924C7533E001F76C0 /* LyricRangePresentation.swift in Sources */,
 				F051E7AE24B7DDD500CCD591 /* SwiftUI+Ext.swift in Sources */,
-				F051E7AB24B3C76D00CCD591 /* AudioBarView.swift in Sources */,
 				F00635E224C3EE8F001D1392 /* LyricMarkerPresentation.swift in Sources */,
 				F08A7F4724C527D5001F76C0 /* LyricGroupings.swift in Sources */,
 				F08FF1A524A5407900A29C71 /* Tree.swift in Sources */,
@@ -376,6 +383,7 @@
 				F0A981C624BB242E00F229AC /* LyricExporter.swift in Sources */,
 				F04DB9A624E4359100DF4C16 /* SeachProcessor.swift in Sources */,
 				F051E7A424B134E000CCD591 /* ColorAlternator.swift in Sources */,
+				F0A4ED7524EF0743002829F4 /* SongMarkerList.swift in Sources */,
 				F04DB9B324E84FD000DF4C16 /* FinetuningPopover.swift in Sources */,
 				F08EC31224C05321000DCA32 /* String.swift in Sources */,
 				F0A7048024DB2C920060F988 /* BeatmapDatabase.swift in Sources */,

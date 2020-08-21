@@ -27,7 +27,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		window.setFrameAutosaveName("Main Window")
 //		window.contentView = LyricMarkingView(frame: .zero)
 		let vc = MainViewController()
-		vc.view.frame = CGRect(x: 200, y: 100, width: 800, height: 600)
+		vc.view.frame = CGRect(x: 200, y: 100, width: NSScreen.main?.frame.width ?? 1000, height: 600)
 		window.contentViewController = vc
 		window.makeKeyAndOrderFront(nil)
 		window.makeFirstResponder(vc)

@@ -22,7 +22,7 @@ private class MainView: NSView {
 	let markerModeButton: NSButton
 	let buttonStack: NSStackView
 	let masterStack: NSStackView
-	var audioBarView: NSHostingView<AnyView>?
+	let songMarkerView: NSHostingView<SongMarkerList>
 	
 	private var monitorToken: Any?
 	
@@ -40,7 +40,8 @@ private class MainView: NSView {
 									exportButton, editButton, markerModeButton])
 		buttonStack.orientation = .vertical
 		lyricView = .init(beatmap: controller.beatmap)
-		masterStack = .init(views: [lyricView, buttonStack])
+		songMarkerView = NSHostingView(rootView: SongMarkerList(beatmap: controller.beatmap))
+		masterStack = .init(views: [lyricView, buttonStack, songMarkerView])
 		
 		super.init(frame: .zero)
 		
@@ -54,6 +55,9 @@ private class MainView: NSView {
 		masterStack.frame = .zero
 		masterStack.translatesAutoresizingMaskIntoConstraints = true
 		addSubview(masterStack)
+		
+		songMarkerView.heightAnchor.constraint(equalTo: masterStack.heightAnchor).isActive = true
+		songMarkerView.widthAnchor.constraint(equalToConstant: 300).isActive = true
 		
 		artworkView.widthAnchor.constraint(equalToConstant: 100).isActive = true
 		artworkView.heightAnchor.constraint(equalToConstant: 100).isActive = true
@@ -74,17 +78,6 @@ private class MainView: NSView {
 	
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
-	}
-	
-	func showAudioBar<V: View>(_ bar: V) {
-		if let audioBarView = audioBarView {
-			audioBarView.rootView = AnyView(bar)
-		} else {
-			audioBarView = .init(rootView: AnyView(bar))
-			masterStack.addArrangedSubview(audioBarView!)
-			audioBarView!.heightAnchor.constraint(equalTo: masterStack.heightAnchor).isActive = true
-			audioBarView!.widthAnchor.constraint(equalToConstant: 100).isActive = true
-		}
 	}
 	
 	func update(with song: SongResource) {
@@ -170,9 +163,7 @@ class MainViewController: NSViewController, SongPlayerDelegate {
 	}
 	
 	func reloadAudioBar() {
-		mainView.showAudioBar(AudioBarViewUI(axis: .vertical,
-											 beatmap: beatmap,
-											 player: player))
+
 	}
 		
 	func didSelect(song: SongResource) {

@@ -66,7 +66,7 @@ class Beatmap: ObservableObject {
 	}
 }
 
-struct SongMarker: Comparable {
+struct SongMarker: Comparable, Hashable {
 	var time: CGFloat
 	
 	static func < (lhs: SongMarker, rhs: SongMarker) -> Bool {
