@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct SongMarkerList: View {
-	@ObservedObject var beatmap: Beatmap
+	@ObservedObject var mapping: MarkerMapping
 	let timeFormatter: DateComponentsFormatter = {
 		let fm = DateComponentsFormatter()
 		fm.allowedUnits = [.minute, .second]
@@ -17,13 +17,14 @@ struct SongMarkerList: View {
 		fm.zeroFormattingBehavior = .pad
 		return fm
 	}()
+	
     var body: some View {
-		List(beatmap.songMarkers, id: \.self) { (marker) in
-			Color.purple
+		List(mapping.getSongMarkers(), id: \.self) { (marker) in
+			(marker.isEnabled ? Color.purple: Color.gray)
 				.frame(width: 10, height: 10)
 			Text(self.timeFormatter.string(from: TimeInterval(marker.time))!)
-				.frame(width: 50)
-			Text("知ってるのー")
+//				.frame(width: 50)
+			Text(marker.isEnabled ? "Lyric": "Instrumental")
 		}
     }
 }

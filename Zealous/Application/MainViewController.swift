@@ -39,8 +39,8 @@ private class MainView: NSView {
 		buttonStack = .init(views: [artworkView, selectButton,
 									exportButton, editButton, markerModeButton])
 		buttonStack.orientation = .vertical
-		lyricView = .init(beatmap: controller.beatmap)
-		songMarkerView = NSHostingView(rootView: SongMarkerList(beatmap: controller.beatmap))
+		lyricView = .init(workspace: controller.workspace)
+		songMarkerView = NSHostingView(rootView: SongMarkerList(mapping: controller.workspace.mapping))
 		masterStack = .init(views: [lyricView, buttonStack, songMarkerView])
 		
 		super.init(frame: .zero)
@@ -127,7 +127,7 @@ class MainViewController: NSViewController, SongPlayerDelegate {
 	
 	override var acceptsFirstResponder: Bool { true }
 	
-	var beatmap: Beatmap = Beatmap()
+	var workspace: Workspace = Workspace(lyric: "")
 	
 	let beatmapDatabase = try! BeatmapDatabase(directory: FileManager.default.url(for: .documentDirectory,
 																				  in: .userDomainMask,
@@ -141,7 +141,7 @@ class MainViewController: NSViewController, SongPlayerDelegate {
 		case " ":
 			player.toggle()
 		case "a", "s", "d":
-			beatmap.markCurrent()
+			workspace.markCurrent()
 		case Character.delete:
 			// TODO: Delete
 			print("Deleted")
@@ -173,17 +173,16 @@ class MainViewController: NSViewController, SongPlayerDelegate {
 		
 		if beatmapDatabase.hasBeatmapForSong(title: song.title, artist: song.artistName) {
 			let alert = NSAlert()
-			alert.informativeText = "Open existing beatmap in database?"
+			alert.informativeText = "Open existing workspace in database?"
 			alert.addButton(withTitle: "Yes")
 			alert.addButton(withTitle: "No")
 			let result = alert.runModal()
 			switch result {
 			case .alertFirstButtonReturn:
 				do {
-					let beatmap = try beatmapDatabase.loadBeatmapForSong(title: song.title,
-														   artist: song.artistName)
-					self.beatmap.lyricSeparator = beatmap.lyricSeparator
-					self.beatmap.songMarkers = beatmap.songMarkers
+					let mapping = try beatmapDatabase.loadBeatmapForSong(title: song.title,
+																		 artist: song.artistName)
+					workspace.updateMapping(mapping)
 				} catch {
 					// TODO: Throw Error
 				}
@@ -193,9 +192,9 @@ class MainViewController: NSViewController, SongPlayerDelegate {
 		}
 		
 		do {
-			beatmap.title = song.title
-			beatmap.artist = song.artistName
-			beatmap.player = player
+			workspace.title = song.title
+			workspace.artist = song.artistName
+			workspace.player = player
 			try player.loadSong(from: song.loadPlayerItem())
 			mainView.update(with: song)
 		} catch {
@@ -210,7 +209,7 @@ class MainViewController: NSViewController, SongPlayerDelegate {
 		do {
 			try beatmapDatabase.reload()
 		} catch {
-			print("Unable to reload beatmap database: \(error)")
+			print("Unable to reload workspace database: \(error)")
 		}
 		
 		let selectionView = SongSelectionView(beatmapDatabase: beatmapDatabase, songs: musicApp.allSongs) { [weak self] song in
@@ -224,9 +223,9 @@ class MainViewController: NSViewController, SongPlayerDelegate {
 	
 	@objc func export() {
 		do {
-			try beatmapDatabase.save(beatmap: beatmap)
+			try beatmapDatabase.save(workspace: workspace)
 		} catch {
-			print("Unable to save beatmap: \(error)")
+			print("Unable to save workspace: \(error)")
 		}
 	}
 	

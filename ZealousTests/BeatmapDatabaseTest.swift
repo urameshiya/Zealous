@@ -14,18 +14,18 @@ class BeatmapDatabaseTest: XCTestCase {
 	var database: BeatmapDatabase!
 	let fm = FileManager.default
 	
-	override func setUp() {
+	override func setUpWithError() throws {
 		testDir = makeTestDirectory()
-		database = .init(directory: testDir)
+		database = try .init(directory: testDir)
 		database.exporter = MockExporter()
 	}
 	
 	func testSavingBeatmap() throws {
-		let bm = Beatmap()
+		let bm = Workspace(lyric: "Test")
 		bm.title = "Hype Mode"
 		bm.artist = "Reol"
-		try database.save(beatmap: bm)
-		try database.save(beatmap: bm) // overwrite doesn't throw error
+		try database.save(workspace: bm)
+		try database.save(workspace: bm) // overwrite doesn't throw error
 		let saveURL = testDir.appendingPathComponent("Reol/Hype Mode.json")
 		XCTAssert(fm.fileExists(atPath: saveURL.path))
 	}
@@ -52,7 +52,7 @@ class BeatmapDatabaseTest: XCTestCase {
 }
 
 final class MockExporter: BeatmapExporter {
-	func export(beatmap: Beatmap) throws -> Data {
+	func export(workspace: Workspace) throws -> Data {
 		return "Testing".data(using: .utf8)!
 	}
 }

@@ -9,14 +9,14 @@
 import Foundation
 
 extension Sequence where Element: Comparable {
-	var isInIncreasingOrder: Bool {
+	var isInIncreasingOrderAndUnique: Bool {
 		var prev: Element?
 		return self.allSatisfy { (cur) -> Bool in
 			defer {
 				prev = cur
 			}
 			if let prev = prev {
-				return cur >= prev
+				return cur > prev
 			}
 			return true
 		}

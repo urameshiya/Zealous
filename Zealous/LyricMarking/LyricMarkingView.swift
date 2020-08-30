@@ -45,7 +45,7 @@ protocol LyricMarkingViewPresentation {
 }
 
 class LyricMarkingView: NSView {
-	let beatmap: Beatmap
+	let workspace: Workspace
 	
 	private lazy var scrollView: NSScrollView = {
 		let view = NSScrollView(frame: bounds)
@@ -70,15 +70,15 @@ class LyricMarkingView: NSView {
 			textView.isEditable = isEditable
 			if !isEditable { // reset
 				textView.isSelectable = false
-				beatmap.lyricSeparator = LyricSeparator(lyric: textView.string)
+				// FIXME: Remove for better way of changing lyrics
 			}
 		}
 	}
 	
 	private var presentation: LyricMarkingViewPresentation?
 		
-	init(beatmap: Beatmap)  {
-		self.beatmap = beatmap
+	init(workspace: Workspace)  {
+		self.workspace = workspace
 		super.init(frame: .zero)
 		addSubview(scrollView)
 		scrollView.documentView = textContainerView

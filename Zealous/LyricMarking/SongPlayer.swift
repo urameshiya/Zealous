@@ -33,11 +33,7 @@ final class SongPlayer: NSObject, ObservableObject {
 		}
 	}
 	
-	func seek(to marker: SongMarker) {
-		seek(to: marker.time)
-	}
-	
-	private func seek(to time: CGFloat) {
+	func seek(to time: CGFloat) {
 		// MARK: Refine timescale here
 		// 100 should be enough for 60fps
 		player.seek(to: .init(seconds: Double(time), preferredTimescale: 100),

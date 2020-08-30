@@ -9,40 +9,61 @@
 import Combine
 import SwiftUI
 
+protocol LyricRangeProvider {
+	var lyricRangesDidChange: AnyPublisher<Void, Never> { get }
+	var lyric: String { get }
+	func allLyricRanges() -> [Range<String.Index>]
+}
+
+protocol SongMarkersProvider {
+	var songMarkersDidChange: AnyPublisher<Void, Never> { get }
+	func allSongMarkers() -> [CGFloat]
+}
+
 final class LyricRangePresentation: LyricMarkingViewPresentation {
 	unowned let lyricView: LyricMarkingView
-	var lyric: String { lyricView.beatmap.lyricSeparator!.lyric }
 	let colorPicker = ColorAlternator(colorPool: [#colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1), #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1), #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)])
 	let rangeContainer: NSView
 	fileprivate var highlightViews = [HighlightView]()
 	private var cancellables = [AnyCancellable]()
 	let hitTestView: HitTestForwardingView
+	let lyricProvider: LyricRangeProvider
+	let songMarkersProvider: SongMarkersProvider
 
 	init(view: LyricMarkingView) {
+		lyricProvider = view.workspace.mapping
+		songMarkersProvider = view.workspace.mapping
 		self.lyricView = view
 		rangeContainer = FlippedNSView(frame: view.textContainerView.bounds)
 		rangeContainer.autoresizingMask = [.width, .height]
 		hitTestView = HitTestForwardingView(target: rangeContainer)
 		hitTestView.frame = lyricView.frame
 		hitTestView.autoresizingMask = [.width, .height]
-		let beatmap = view.beatmap
+		let workspace = view.workspace
 		
-		beatmap.$lyricSeparator.sink { [unowned self] _ in
+		lyricProvider.lyricRangesDidChange.sink { [unowned self] _ in
 			self.recalculateHighlightViews()
 		}.store(in: &cancellables)
 		
-		beatmap.$player.sink { [unowned self] (player) in
+		
+		workspace.$player.sink { [unowned self] (player) in
 			guard let player = player else {
 				self.playAlong = nil
 				return
 			}
-			let markingNotifier = MarkerReachedNotifier(player: player, markersPublisher: beatmap.$songMarkers.eraseToAnyPublisher())
+			let initialMarkers = self.songMarkersProvider.allSongMarkers()
+			let markingNotifier = MarkerReachedNotifier(player: player,
+														markersPublisher: Just(initialMarkers)
+															.append(self.songMarkersProvider
+																.songMarkersDidChange
+																.map(self.songMarkersProvider.allSongMarkers))
+															.eraseToAnyPublisher())
 			self.playAlong = .init(presentation: self, notifier: markingNotifier)
 		}.store(in: &cancellables)
 	}
 	
 	func addHighlightView(over segment: Range<String.Index>, color: NSColor, position: Int) {
-		let range = NSRange(segment, in:lyric)
+		let range = NSRange(segment, in: lyricProvider.lyric)
 		let frame = lyricView.layoutManager.boundingRect(forGlyphRange: range, in: lyricView.textContainer)
 		let highlight = HighlightView(frame: frame, color: color, position: position, presentation: self)
 		rangeContainer.addSubview(highlight)
@@ -50,6 +71,7 @@ final class LyricRangePresentation: LyricMarkingViewPresentation {
 	}
 	
 	func show() {
+		recalculateHighlightViews()
 		lyricView.textContainerView.addSubview(rangeContainer, positioned: .below, relativeTo: lyricView.textView)
 		lyricView.addSubview(hitTestView)
 	}
@@ -62,10 +84,7 @@ final class LyricRangePresentation: LyricMarkingViewPresentation {
 	var playAlong: LyricPlayAlong?
 	
 	func recalculateHighlightViews() {
-		guard let separator = lyricView.beatmap.lyricSeparator else {
-			return
-		}
-		let ranges = separator.allSegments()
+		let ranges = lyricProvider.allLyricRanges()
 		for old in highlightViews {
 			old.removeFromSuperview()
 		}
@@ -78,23 +97,23 @@ final class LyricRangePresentation: LyricMarkingViewPresentation {
 	}
 	
 	func highlightDidClick(at position: Int) {
-		let beatmap = lyricView.beatmap
-
-		let view = highlightViews[position]
-		let popover = NSPopover()
-		popover.contentViewController = NSHostingController(rootView: FinetuningPopover(seekHandler: { (offset) in
-			if beatmap.nudgeSongMarker(at: position, by: offset) {
-				beatmap.player?.seek(to: beatmap.songMarkers[position])
-				beatmap.player?.play()
-			} else {
-				// TODO: Play error sound
-			}
-		}))
-		popover.behavior = .transient
-		popover.show(relativeTo: view.bounds, of: view, preferredEdge: .minY)
-		
-		beatmap.player?.seek(to: beatmap.songMarkers[position])
-		beatmap.player?.play()
+//		let workspace = lyricView.workspace
+//
+//		let view = highlightViews[position]
+//		let popover = NSPopover()
+//		popover.contentViewController = NSHostingController(rootView: FinetuningPopover(seekHandler: { (offset) in
+//			if workspace.nudgeSongMarker(at: position, by: offset) {
+//				workspace.player?.seek(to: workspace.songMarkers[position])
+//				workspace.player?.play()
+//			} else {
+//				// TODO: Play error sound
+//			}
+//		}))
+//		popover.behavior = .transient
+//		popover.show(relativeTo: view.bounds, of: view, preferredEdge: .minY)
+//
+//		workspace.player?.seek(to: workspace.songMarkers[position])
+//		workspace.player?.play()
 	}
 }
 
@@ -152,7 +171,7 @@ final class LyricPlayAlong {
 	var currentHighlighted: Int?
 	var cancellable: Any!
 	
-	var beatmap: Beatmap { presentation.lyricView.beatmap }
+	var workspace: Workspace { presentation.lyricView.workspace }
 	
 	init(presentation: LyricRangePresentation, notifier: MarkerReachedNotifier) {
 		self.presentation = presentation

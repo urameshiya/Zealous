@@ -94,7 +94,7 @@ final class LyricMarkerPresentation: LyricMarkingViewPresentation {
 		markerContainerView.removeFromSuperview()
 	}
 	
-	func beatmapDidChange() {
+	func workspaceDidChange() {
 		// TODO: Recalculate highlight views
 	}
 }

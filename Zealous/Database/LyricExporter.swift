@@ -9,32 +9,35 @@
 import Foundation
 
 protocol BeatmapExporter {
-	func export(beatmap: Beatmap) throws -> Data
+	func export(workspace: Workspace) throws -> Data
 }
 
 enum ExporterError: Error {
-	case noLyricSeparator
+	case unbalancedMapping
 }
 
 final class LyricExporter: BeatmapExporter {
-	func export(beatmap: Beatmap) throws -> Data {
-		guard let lyricSeparator = beatmap.lyricSeparator else {
-			throw ExporterError.noLyricSeparator
-		}
-		let processedLyric = serialize(range: lyricSeparator.segments,
-									   distance: lyricSeparator.lyric.distance(from:to:))
+	func export(workspace: Workspace) throws -> Data {
+		let processedLyric = serialize(ranges: workspace.mapping.allLyricRanges(),
+									   lyric: workspace.lyric)
 		var beats = [BeatmapFile.Beat]()
-		var disabledMarkers = [CGFloat]()
-		let audioMarkers = beatmap.songMarkers
+		let audioMarkers = workspace.mapping.getSongMarkers()
+		let disabledMarkers = audioMarkers
+			.filter { $0.isEnabled }
+			.map { $0.time }
+		
 		var i = 0
-		audioMarkers.forEach { (marker) in
-			if i < processedLyric.count {
+		for marker in audioMarkers {
+			if i == processedLyric.count {
+				throw ExporterError.unbalancedMapping
+			}
+			if marker.isEnabled {
 				beats.append(.init(time: marker.time, segment: processedLyric[i]))
 				i += 1
 			}
 		}
 		
-		let outFile = BeatmapFile(lyric: lyricSeparator.lyric,
+		let outFile = BeatmapFile(lyric: workspace.lyric,
 								  beatmap: beats,
 								  disabledTimes: disabledMarkers)
 		let data = try JSONEncoder().encode(outFile)
@@ -44,59 +47,46 @@ final class LyricExporter: BeatmapExporter {
 }
 
 final class LyricImporter {
-	func load(from url: URL) throws -> Beatmap {
+	func load(from url: URL) throws -> MarkerMapping {
 		let data = try Data(contentsOf: url)
 		let file = try JSONDecoder().decode(BeatmapFile.self, from: data)
-		let beatmap = Beatmap()
-		let separator = LyricSeparator(lyric: file.lyric)
-		deserialize(separator: separator, offsets: file.beatmap.map { $0.segment })
-		beatmap.lyricSeparator = separator
-		beatmap.songMarkers = file.beatmap.map { .init(time: $0.time) }
-		return beatmap
+		let rangeCollection = deserialize(offsets: file.beatmap.map { $0.segment }, lyric: file.lyric)
+		let markerCollection = MarkerCollection<CGFloat>(enabled: file.beatmap.map { $0.time },
+														 disabled: file.disabledTimes)
+		let mapping = MarkerMapping(lyricMarkers: rangeCollection,
+									songMarkers: markerCollection,
+									lyric: file.lyric)
+		return mapping
 	}
 }
 
-private func deserialize(separator: LyricSeparator, offsets: [Range<Int>]) {
-	let range = separator.segments
-	let lyric = separator.lyric
+private func deserialize(offsets: [Range<Int>], lyric: String) -> RangeCollection<String.Index> {
+	let markers = MarkerCollection<String.Index>()
 	var lastIndex = lyric.startIndex
+
 	for segment in offsets {
 		let valid = lyric.index(lastIndex, offsetBy: segment.lowerBound)
 		let invalid = lyric.index(valid, offsetBy: segment.upperBound)
-		range.mark(index: valid, enabled: true)
-		range.mark(index: invalid, enabled: false)
+		markers.updateMarker(valid, enabled: true)
+		markers.updateMarker(invalid, enabled: false)
 		lastIndex = invalid
 	}
+	return markers.rangeView
 }
 
 /// lowerbound: offset from the previous segment/length of the invalid segment,
 /// upperbound: length of the valid segment
-fileprivate func serialize<Index, Distance>(range: GapSegmentedRange<Index>,
-								  distance: (Index, Index) -> Distance) -> [Range<Distance>] where Distance: Numeric  {
-	var segments = [Range<Distance>]()
-	let markers = range.segments.markers
-	
-	var invalidOffset = Distance.zero
-	var lastWereValid = true
-	var lastIndex: Index! = nil
-	markers.traverse { (marker) in
-		guard lastIndex != nil else {
-			lastIndex = marker.index
-			return
-		}
+fileprivate func serialize<C: Collection>(ranges: C, lyric: String)
+	-> [Range<Int>] where C.Element == Range<String.Index> {
+	var lastIndex = lyric.startIndex
+	return ranges.map { (segment) in
 		defer {
-			lastWereValid = marker.isValid
-			lastIndex = marker.index
+			lastIndex = segment.upperBound
 		}
-		let distance = distance(lastIndex, marker.index)
-		guard lastWereValid else {
-			invalidOffset += distance
-			return
-		}
-		segments.append(invalidOffset..<distance)
-		invalidOffset = 0
+		let offsetFromPrevEnd = lyric.distance(from: lastIndex, to: segment.lowerBound)
+		let length = lyric.distance(from: segment.lowerBound, to: segment.upperBound)
+		return offsetFromPrevEnd..<length
 	}
-	return segments
 }
 
 struct BeatmapFile: Codable {

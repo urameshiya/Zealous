@@ -50,14 +50,14 @@ class BeatmapDatabase {
 	
 	private let unknownArtist = "Unknown Artist"
 	
-	func save(beatmap: Beatmap) throws {
-		guard let title = beatmap.title else {
+	func save(workspace: Workspace) throws {
+		guard let title = workspace.title else {
 			return
 		}
-		let data = try exporter.export(beatmap: beatmap)
-		let url = try getBeatmapURL(title: title, artist: beatmap.artist, create: true)
+		let data = try exporter.export(workspace: workspace)
+		let url = try getBeatmapURL(title: title, artist: workspace.artist, create: true)
 		try data.write(to: url, options: .atomic)
-		cachedTitles[beatmap.artist ?? unknownArtist, default: Set()].insert(title)
+		cachedTitles[workspace.artist ?? unknownArtist, default: Set()].insert(title)
 		// TODO: Reserved characters like :/
 	}
 	
@@ -73,7 +73,7 @@ class BeatmapDatabase {
 		return url
 	}
 	
-	func loadBeatmapForSong(title: String, artist: String?) throws -> Beatmap {
+	func loadBeatmapForSong(title: String, artist: String?) throws -> MarkerMapping {
 		return try importer.load(from: getBeatmapURL(title: title, artist: artist, create: false))
 	}
 }
