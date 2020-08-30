@@ -23,10 +23,17 @@ struct SongMarkerList: View {
 			(marker.isEnabled ? Color.purple: Color.gray)
 				.frame(width: 10, height: 10)
 			Text(self.timeFormatter.string(from: TimeInterval(marker.time))!)
-//				.frame(width: 50)
-			Text(marker.isEnabled ? "Lyric": "Instrumental")
+				.frame(width: 50)
+			Text(marker.isEnabled ? self.getLyric(for: marker): "Instrumental")
+				.lineLimit(1)
+				.frame(width: 150, alignment: .leading)
 		}
     }
+	
+	func getLyric(for marker: SongMarker) -> some StringProtocol {
+		let range = mapping.getLyricRange(for: marker)
+		return mapping.lyric[range]
+	}
 }
 //
 //struct SongMarkerList_Previews: PreviewProvider {

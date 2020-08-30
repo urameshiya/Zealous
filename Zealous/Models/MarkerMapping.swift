@@ -127,12 +127,13 @@ final class MarkerMapping: ObservableObject, LyricRangeProvider, SongMarkersProv
 		}
 		evaluateMatchesIfNeeded()
 	}
-
-	func getLyricMarker(for marker: SongMarker) -> String.Index? {
-		return _map[marker.time]
+	
+	func getLyricRange(for marker: SongMarker) -> Range<String.Index> {
+		return lyricMarkers.range(containing: _map[marker.time]!)!
 	}
 			
 	private func evaluateMatchesIfNeeded() {
+		objectWillChange.send()
 		let (results, _, _) = align(c1: lyricMarkers.lazy.map { $0.lowerBound },
 									c2: songMarkers.lazy
 										.filter { $0.isEnabled }

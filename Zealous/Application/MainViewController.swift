@@ -183,6 +183,7 @@ class MainViewController: NSViewController, SongPlayerDelegate {
 					let mapping = try beatmapDatabase.loadBeatmapForSong(title: song.title,
 																		 artist: song.artistName)
 					workspace.updateMapping(mapping)
+					mainView.songMarkerView.rootView = .init(mapping: mapping)
 				} catch {
 					// TODO: Throw Error
 				}
