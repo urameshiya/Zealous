@@ -10,12 +10,6 @@ import AppKit
 import AVKit
 import Combine
 
-enum MarkingViewPresentationMode {
-	case marker
-	case segment
-	case none
-}
-
 // Because we can't add highlight underneath otherwise
 class TextContainerView: NSView {
 	lazy var textView: NSTextView = {
@@ -105,20 +99,10 @@ class LyricMarkingView: NSView {
 		textView.textContainer!
 	}
 	
-	func changePresentation(_ mode: MarkingViewPresentationMode) {
-		if let presentation = presentation {
-			presentation.cleanup()
-		}
-		switch mode {
-		case .marker:
-			presentation = LyricMarkerPresentation(lyricView: self)
-		case .segment:
-			presentation = LyricRangePresentation(view: self)
-		case .none:
-			presentation = nil
-			return
-		}
-		presentation!.show()
+	func changePresentation(to presentation: LyricMarkingViewPresentation) {
+		self.presentation?.cleanup()
+		self.presentation = presentation
+		presentation.show()
 	}
 }
 

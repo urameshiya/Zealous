@@ -20,7 +20,7 @@ protocol SongMarkersProvider {
 	func allSongMarkers() -> [CGFloat]
 }
 
-protocol LyricRangePresentationDelegate {
+protocol LyricRangePresentationDelegate: AnyObject {
 	func lyricRangePresentation(_ presentation: LyricRangePresentation, didSelectRange: Range<String.Index>)
 }
 
@@ -33,6 +33,7 @@ final class LyricRangePresentation: LyricMarkingViewPresentation {
 	let hitTestView: HitTestForwardingView
 	let lyricProvider: LyricRangeProvider
 	let songMarkersProvider: SongMarkersProvider
+	weak var delegate: LyricRangePresentationDelegate?
 
 	init(view: LyricMarkingView) {
 		lyricProvider = view.workspace.mapping
@@ -66,10 +67,10 @@ final class LyricRangePresentation: LyricMarkingViewPresentation {
 		}.store(in: &cancellables)
 	}
 	
-	func addHighlightView(over segment: Range<String.Index>, color: NSColor, position: Int) {
+	func addHighlightView(over segment: Range<String.Index>, color: NSColor) {
 		let range = NSRange(segment, in: lyricProvider.lyric)
 		let frame = lyricView.layoutManager.boundingRect(forGlyphRange: range, in: lyricView.textContainer)
-		let highlight = HighlightView(frame: frame, color: color, position: position, presentation: self)
+		let highlight = HighlightView(frame: frame, color: color, range: segment, presentation: self)
 		rangeContainer.addSubview(highlight)
 		highlightViews.append(highlight)
 	}
@@ -93,31 +94,14 @@ final class LyricRangePresentation: LyricMarkingViewPresentation {
 			old.removeFromSuperview()
 		}
 		highlightViews = .init()
-		for i in 0..<ranges.count {
-			let range = ranges[i]
+		for range in ranges {
 			let color = colorPicker.nextColor()
-			addHighlightView(over: range, color: color, position: i)
+			addHighlightView(over: range, color: color)
 		}
 	}
 	
-	func highlightDidClick(at position: Int) {
-//		let workspace = lyricView.workspace
-//
-//		let view = highlightViews[position]
-//		let popover = NSPopover()
-//		popover.contentViewController = NSHostingController(rootView: FinetuningPopover(seekHandler: { (offset) in
-//			if workspace.nudgeSongMarker(at: position, by: offset) {
-//				workspace.player?.seek(to: workspace.songMarkers[position])
-//				workspace.player?.play()
-//			} else {
-//				// TODO: Play error sound
-//			}
-//		}))
-//		popover.behavior = .transient
-//		popover.show(relativeTo: view.bounds, of: view, preferredEdge: .minY)
-//
-//		workspace.player?.seek(to: workspace.songMarkers[position])
-//		workspace.player?.play()
+	fileprivate func highlightDidClick(_ view: HighlightView) {
+		delegate?.lyricRangePresentation(self, didSelectRange: view.range)
 	}
 }
 
@@ -140,15 +124,15 @@ class HitTestForwardingView: NSView {
 
 private class HighlightView: NSView {
 	unowned let presentation: LyricRangePresentation
-	let position: Int
+	let range: Range<String.Index>
 	
 	init(frame frameRect: NSRect,
 		 color: NSColor,
-		 position: Int,
+		 range: Range<String.Index>,
 		 presentation: LyricRangePresentation)
 	{
 		self.presentation = presentation
-		self.position = position
+		self.range = range
 		super.init(frame: frameRect)
 		wantsLayer = true
 		let hLayer = layer!
@@ -166,7 +150,7 @@ private class HighlightView: NSView {
 	}
 	
 	@objc func didClick(_ gesture: NSClickGestureRecognizer) {
-		presentation.highlightDidClick(at: position)
+		presentation.highlightDidClick(self)
 	}
 }
 

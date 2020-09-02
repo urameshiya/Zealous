@@ -17,9 +17,10 @@ struct SongMarkerList: View {
 		fm.zeroFormattingBehavior = .pad
 		return fm
 	}()
+	@Binding var selectedMarker: SongMarker?
 	
     var body: some View {
-		List(mapping.getSongMarkers(), id: \.self) { (marker) in
+		List(mapping.getSongMarkers(), id: \.self, selection: $selectedMarker) { (marker) in
 			(marker.isEnabled ? Color.purple: Color.gray)
 				.frame(width: 10, height: 10)
 			Text(self.timeFormatter.string(from: TimeInterval(marker.time))!)

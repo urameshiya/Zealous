@@ -41,6 +41,7 @@
 		F0D913EC24F2E3DC0047EDDF /* OneToOneDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D913EB24F2E3DB0047EDDF /* OneToOneDictionary.swift */; };
 		F0DEEE6124F96FA600677693 /* MarkerCollectionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0DEEE6024F96FA600677693 /* MarkerCollectionTest.swift */; };
 		F0DEEE6324F98B9700677693 /* MarkerMappingTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0DEEE6224F98B9700677693 /* MarkerMappingTest.swift */; };
+		F0DEEE6524FD74B400677693 /* MappingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0DEEE6424FD74B400677693 /* MappingCoordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +97,7 @@
 		F0D913EB24F2E3DB0047EDDF /* OneToOneDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneToOneDictionary.swift; sourceTree = "<group>"; };
 		F0DEEE6024F96FA600677693 /* MarkerCollectionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerCollectionTest.swift; sourceTree = "<group>"; };
 		F0DEEE6224F98B9700677693 /* MarkerMappingTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerMappingTest.swift; sourceTree = "<group>"; };
+		F0DEEE6424FD74B400677693 /* MappingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MappingCoordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +145,7 @@
 			isa = PBXGroup;
 			children = (
 				F0A4ED7124EE254B002829F4 /* MarkerMapping.swift */,
+				F0DEEE6424FD74B400677693 /* MappingCoordinator.swift */,
 				F0D913E324F07CC90047EDDF /* MarkerCollection.swift */,
 				F0D913E724F230B20047EDDF /* RangeCollection.swift */,
 				F08A7F4624C527D5001F76C0 /* LyricGroupings.swift */,
@@ -403,6 +406,7 @@
 				F08EC31224C05321000DCA32 /* String.swift in Sources */,
 				F0D913EC24F2E3DC0047EDDF /* OneToOneDictionary.swift in Sources */,
 				F0A7048024DB2C920060F988 /* BeatmapDatabase.swift in Sources */,
+				F0DEEE6524FD74B400677693 /* MappingCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

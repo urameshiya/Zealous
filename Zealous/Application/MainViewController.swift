@@ -20,6 +20,7 @@ private class MainView: NSView {
 	let editButton: NSButton
 	let exportButton: NSButton
 	let markerModeButton: NSButton
+	let mapButton: NSButton
 	let buttonStack: NSStackView
 	let masterStack: NSStackView
 	let songMarkerView: NSHostingView<SongMarkerList>
@@ -35,12 +36,16 @@ private class MainView: NSView {
 								action: #selector(Controller.export))
 		editButton = NSButton(title: "Edit lyric", target: nil, action: nil)
 		markerModeButton = NSButton(title: "Marker Mode", target: nil, action: nil)
+		mapButton = NSButton(title: "Map selected",
+							 target: controller.mappingCoordinator,
+							 action: #selector(MappingCoordinator.mapCurrentlySelected))
 		artworkView = .init()
 		buttonStack = .init(views: [artworkView, selectButton,
-									exportButton, editButton, markerModeButton])
+									exportButton, editButton, markerModeButton, mapButton])
 		buttonStack.orientation = .vertical
 		lyricView = .init(workspace: controller.workspace)
-		songMarkerView = NSHostingView(rootView: SongMarkerList(mapping: controller.workspace.mapping))
+		songMarkerView = NSHostingView(rootView: SongMarkerList(mapping: controller.workspace.mapping,
+																selectedMarker: controller.mappingCoordinator.selectedSongMarkerBinding))
 		masterStack = .init(views: [lyricView, buttonStack, songMarkerView])
 		
 		super.init(frame: .zero)
@@ -48,8 +53,8 @@ private class MainView: NSView {
 		editButton.target = self
 		editButton.action = #selector(editButtonDidClick)
 		
-		markerModeButton.target = self
-		markerModeButton.action = #selector(markerMode)
+		markerModeButton.target = controller
+		markerModeButton.action = #selector(Controller.markerMode)
 		
 		masterStack.autoresizingMask = [.width, .height]
 		masterStack.frame = .zero
@@ -94,10 +99,6 @@ private class MainView: NSView {
 			editButton.keyEquivalent = ""
 		}
 	}
-	
-	@objc func markerMode() {
-		lyricView.changePresentation(.segment)
-	}
 }
 
 // MARK: - View Controller
@@ -128,6 +129,7 @@ class MainViewController: NSViewController, SongPlayerDelegate {
 	override var acceptsFirstResponder: Bool { true }
 	
 	var workspace: Workspace = Workspace(lyric: "")
+	lazy var mappingCoordinator = MappingCoordinator(mapping: workspace.mapping)
 	
 	let beatmapDatabase = try! BeatmapDatabase(directory: FileManager.default.url(for: .documentDirectory,
 																				  in: .userDomainMask,
@@ -183,7 +185,9 @@ class MainViewController: NSViewController, SongPlayerDelegate {
 					let mapping = try beatmapDatabase.loadBeatmapForSong(title: song.title,
 																		 artist: song.artistName)
 					workspace.updateMapping(mapping)
-					mainView.songMarkerView.rootView = .init(mapping: mapping)
+					mainView.songMarkerView.rootView = .init(mapping: mapping,
+															 selectedMarker: mappingCoordinator.selectedSongMarkerBinding)
+					mappingCoordinator.mapping = mapping
 				} catch {
 					// TODO: Throw Error
 				}
@@ -232,5 +236,11 @@ class MainViewController: NSViewController, SongPlayerDelegate {
 	
 	@objc func play() {
 		player.toggle()
+	}
+	
+	@objc func markerMode() {
+		let presentation = LyricRangePresentation(view: mainView.lyricView)
+		presentation.delegate = mappingCoordinator
+		mainView.lyricView.changePresentation(to: presentation)
 	}
 }
