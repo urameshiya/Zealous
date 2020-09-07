@@ -17,7 +17,7 @@ protocol LyricRangeProvider {
 
 protocol SongMarkersProvider {
 	var songMarkersDidChange: AnyPublisher<Void, Never> { get }
-	func allSongMarkers() -> [CGFloat]
+	func allSongMarkers() -> [SongMarker]
 }
 
 protocol LyricRangePresentationDelegate: AnyObject {
@@ -28,7 +28,7 @@ final class LyricRangePresentation: LyricMarkingViewPresentation {
 	unowned let lyricView: LyricMarkingView
 	let colorPicker = ColorAlternator(colorPool: [#colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1), #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1), #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)])
 	let rangeContainer: NSView
-	fileprivate var highlightViews = [HighlightView]()
+	fileprivate var highlightViews = [String.Index: HighlightView]()
 	private var cancellables = [AnyCancellable]()
 	let hitTestView: HitTestForwardingView
 	let lyricProvider: LyricRangeProvider
@@ -72,7 +72,7 @@ final class LyricRangePresentation: LyricMarkingViewPresentation {
 		let frame = lyricView.layoutManager.boundingRect(forGlyphRange: range, in: lyricView.textContainer)
 		let highlight = HighlightView(frame: frame, color: color, range: segment, presentation: self)
 		rangeContainer.addSubview(highlight)
-		highlightViews.append(highlight)
+		highlightViews[segment.lowerBound] = highlight
 	}
 	
 	func show() {
@@ -90,7 +90,7 @@ final class LyricRangePresentation: LyricMarkingViewPresentation {
 	
 	func recalculateHighlightViews() {
 		let ranges = lyricProvider.allLyricRanges()
-		for old in highlightViews {
+		for old in highlightViews.values {
 			old.removeFromSuperview()
 		}
 		highlightViews = .init()
@@ -156,7 +156,7 @@ private class HighlightView: NSView {
 
 final class LyricPlayAlong {
 	unowned let presentation: LyricRangePresentation
-	var currentHighlighted: Int?
+	private var currentHighlighted: HighlightView?
 	var cancellable: Any!
 	
 	var workspace: Workspace { presentation.lyricView.workspace }
@@ -165,20 +165,25 @@ final class LyricPlayAlong {
 		self.presentation = presentation
 		cancellable = notifier
 			.receive(on: DispatchQueue.main)
-			.sink(receiveValue: { [unowned self] (value) in
-				self.highlight(at: value?.position)
+			.sink(receiveValue: { [unowned self] marker in
+				self.highlight(at: marker)
 		})
 	}
 	
-	func highlight(at index: Int?) {
+	func highlight(at marker: SongMarker?) {
+		
 		if let old = currentHighlighted {
-			let view = presentation.highlightViews[old]
-			view.layer?.opacity = 0.3
+			old.layer?.opacity = 0.3
+			currentHighlighted = nil
 		}
-		if let new = index {
-			let view = presentation.highlightViews[new]
+		
+		guard let marker = marker else {
+			return
+		}
+		
+		if let new = workspace.mapping.getLyricRange(for: marker)?.lowerBound,
+			let view = presentation.highlightViews[new] {
 			view.layer?.opacity = 1.0
 		}
-		currentHighlighted = index
 	}
 }

@@ -33,9 +33,8 @@ final class MarkerMapping: ObservableObject, LyricRangeProvider, SongMarkersProv
 		_songMarkersDidChange.eraseToAnyPublisher()
 	}
 	
-	func allSongMarkers() -> [CGFloat] {
-		songMarkers
-			.map { $0.value}
+	func allSongMarkers() -> [SongMarker] {
+		songMarkers.map { .init(time: $0.value, isEnabled: $0.isEnabled) }
 	}
 	
 	func allLyricRanges() -> [Range<String.Index>] {
@@ -72,6 +71,14 @@ final class MarkerMapping: ObservableObject, LyricRangeProvider, SongMarkersProv
 		
 		evaluateMatchesIfNeeded()
 	}
+	
+	func updateLyric(_ lyric: String) {
+		objectWillChange.send()
+		self.lyric = lyric
+		lyricMarkers = .init(maxRange: lyric.startIndex..<lyric.endIndex)
+		anchors = .init()
+		_map = .init()
+	}
 		
 	func addAnchor(lyric: String.Index, song: CGFloat) throws {
 		let insertAt = try anchors.firstIndex { (maxString, maxSong) -> Bool in
@@ -89,6 +96,16 @@ final class MarkerMapping: ObservableObject, LyricRangeProvider, SongMarkersProv
 	
 	func lyricRange(containing stringIndex: String.Index) -> Range<String.Index>? {
 		return lyricMarkers.range(containing: stringIndex)
+	}
+	
+	func splitLyricRange(withLowerBound lowerBound: String.Index, using splitter: LyricSegmentProcessing) {
+		lyricMarkers.splitRange(withLowerbound: lowerBound) { range in
+			splitter
+				.process(segment: self.lyric[range])
+				.map { $0.startIndex..<$0.endIndex }
+		}
+		evaluateMatchesIfNeeded()
+		_lyricRangesDidChange.send()
 	}
 	
 	func splitLyricRange(at stringIndex: String.Index) -> Bool {
@@ -128,8 +145,11 @@ final class MarkerMapping: ObservableObject, LyricRangeProvider, SongMarkersProv
 		evaluateMatchesIfNeeded()
 	}
 	
-	func getLyricRange(for marker: SongMarker) -> Range<String.Index> {
-		return lyricMarkers.range(containing: _map[marker.time]!)!
+	func getLyricRange(for marker: SongMarker) -> Range<String.Index>? {
+		if let marker = _map[marker.time] {
+			return lyricMarkers.range(containing: marker)!
+		}
+		return nil
 	}
 			
 	private func evaluateMatchesIfNeeded() {

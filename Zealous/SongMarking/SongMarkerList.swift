@@ -31,9 +31,11 @@ struct SongMarkerList: View {
 		}
     }
 	
-	func getLyric(for marker: SongMarker) -> some StringProtocol {
-		let range = mapping.getLyricRange(for: marker)
-		return mapping.lyric[range]
+	func getLyric(for marker: SongMarker) -> Substring {
+		if let range = mapping.getLyricRange(for: marker) {
+			return mapping.lyric[range]
+		}
+		return ""
 	}
 }
 //

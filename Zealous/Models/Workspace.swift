@@ -9,16 +9,20 @@
 import Foundation
 import AVFoundation
 
-class Workspace {
+class Workspace: ObservableObject {
 	@Published var player: SongPlayer?
 	private(set) var mapping: MarkerMapping
 	var title: String?
 	var artist: String?
-	var lyric: String
+	@Published private(set) var lyric: String
 	
 	init(lyric: String) {
 		self.mapping = .init(lyric: lyric)
 		self.lyric = lyric
+	}
+	
+	func updateLyric(_ lyric: String) {
+		mapping.updateLyric(lyric)
 	}
 	
 	func updateMapping(_ mapping: MarkerMapping) {

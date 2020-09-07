@@ -42,6 +42,7 @@
 		F0DEEE6124F96FA600677693 /* MarkerCollectionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0DEEE6024F96FA600677693 /* MarkerCollectionTest.swift */; };
 		F0DEEE6324F98B9700677693 /* MarkerMappingTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0DEEE6224F98B9700677693 /* MarkerMappingTest.swift */; };
 		F0DEEE6524FD74B400677693 /* MappingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0DEEE6424FD74B400677693 /* MappingCoordinator.swift */; };
+		F0DEEE6F2505622E00677693 /* LyricSegmentProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0DEEE6E2505622E00677693 /* LyricSegmentProcessing.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,6 +99,7 @@
 		F0DEEE6024F96FA600677693 /* MarkerCollectionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerCollectionTest.swift; sourceTree = "<group>"; };
 		F0DEEE6224F98B9700677693 /* MarkerMappingTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerMappingTest.swift; sourceTree = "<group>"; };
 		F0DEEE6424FD74B400677693 /* MappingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MappingCoordinator.swift; sourceTree = "<group>"; };
+		F0DEEE6E2505622E00677693 /* LyricSegmentProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricSegmentProcessing.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +147,7 @@
 			isa = PBXGroup;
 			children = (
 				F0A4ED7124EE254B002829F4 /* MarkerMapping.swift */,
+				F0DEEE6E2505622E00677693 /* LyricSegmentProcessing.swift */,
 				F0DEEE6424FD74B400677693 /* MappingCoordinator.swift */,
 				F0D913E324F07CC90047EDDF /* MarkerCollection.swift */,
 				F0D913E724F230B20047EDDF /* RangeCollection.swift */,
@@ -398,6 +401,7 @@
 				F08FF18E24A3C0D200A29C71 /* LyricMarkingView.swift in Sources */,
 				F0A981CF24BBBC5300F229AC /* SongSelectionView.swift in Sources */,
 				F0A981C624BB242E00F229AC /* LyricExporter.swift in Sources */,
+				F0DEEE6F2505622E00677693 /* LyricSegmentProcessing.swift in Sources */,
 				F0D913E824F230B30047EDDF /* RangeCollection.swift in Sources */,
 				F04DB9A624E4359100DF4C16 /* SeachProcessor.swift in Sources */,
 				F051E7A424B134E000CCD591 /* ColorAlternator.swift in Sources */,
