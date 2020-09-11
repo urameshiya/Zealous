@@ -11,13 +11,14 @@ import AVKit
 import Combine
 
 // Because we can't add highlight underneath otherwise
-class TextContainerView: NSView {
+class TextContainerView: NSView, NSTextViewDelegate {
 	lazy var textView: NSTextView = {
 		let view = NSTextView(frame: bounds)
 		view.backgroundColor = .clear
 		view.isVerticallyResizable = true
 		view.isHorizontallyResizable = true
 		addSubview(view)
+		view.delegate = self
 		return view
 	}()
 	
@@ -30,6 +31,10 @@ class TextContainerView: NSView {
 	
 	override var isFlipped: Bool { // want .zero to be top, like how textview behaves in scrollview
 		return true
+	}
+	
+	func textDidChange(_ notification: Notification) {
+		needsLayout = true
 	}
 }
 
@@ -66,6 +71,7 @@ class LyricMarkingView: NSView {
 				textView.isSelectable = false
 				// FIXME: Remove for better way of changing lyrics
 				workspace.updateLyric(textView.string)
+				workspace.mapping.splitLyricRange(withLowerBound: textView.string.startIndex, using: LyricSegmentDefaultProcessor.splitNewline)
 			}
 		}
 	}
@@ -82,7 +88,6 @@ class LyricMarkingView: NSView {
 			.receive(on: DispatchQueue.main)
 			.sink { [unowned self] (lyric) in
 				self.textView.string = lyric
-				self.textContainerView.needsLayout = true
 		}
 		textView.string = workspace.lyric
 		textView.isEditable = false

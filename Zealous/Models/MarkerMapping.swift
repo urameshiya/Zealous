@@ -22,7 +22,7 @@ struct SongMarker: Comparable, Hashable {
 }
 
 final class MarkerMapping: ObservableObject, LyricRangeProvider, SongMarkersProvider {
-	typealias SongMarkersCollection = AnyRandomAccessCollection<SongMarker>
+	typealias SongMarkersCollection = [SongMarker]
 	private var _lyricRangesDidChange = PassthroughSubject<Void, Never>()
 	var lyricRangesDidChange: AnyPublisher<Void, Never> {
 		return _lyricRangesDidChange.eraseToAnyPublisher()
@@ -42,7 +42,7 @@ final class MarkerMapping: ObservableObject, LyricRangeProvider, SongMarkersProv
 	}
 	
 	func getSongMarkers() -> SongMarkersCollection {
-		return .init(songMarkers.lazy.map { SongMarker(time: $0.value, isEnabled: $0.isEnabled) })
+		return songMarkers.map { SongMarker(time: $0.value, isEnabled: $0.isEnabled) }
 	}
 	
 //	typealias Anchor = (RangeCollection<String.Index>.Index, MarkerCollection<CGFloat>.Index)
@@ -133,13 +133,13 @@ final class MarkerMapping: ObservableObject, LyricRangeProvider, SongMarkersProv
 		_lyricRangesDidChange.send()
 	}
 		
-	func removeMarker(song: CGFloat) {
-		guard let i = songMarkers.firstIndex(where: { $0.value == song }) else {
+	func removeMarker(song: SongMarker) {
+		guard let i = songMarkers.firstIndex(where: { $0.value == song.time }) else {
 			assertionFailure("Not exist")
 			return
 		}
 		songMarkers.removeMarker(at: i)
-		if let anchorIndex = anchors.firstIndex(where: { $0.1 == song }) {
+		if let anchorIndex = anchors.firstIndex(where: { $0.1 == song.time }) {
 			anchors.remove(at: anchorIndex)
 		}
 		evaluateMatchesIfNeeded()

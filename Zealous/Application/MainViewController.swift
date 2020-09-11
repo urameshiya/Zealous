@@ -145,8 +145,7 @@ class MainViewController: NSViewController, SongPlayerDelegate {
 		case "a", "s", "d":
 			workspace.markCurrent()
 		case Character.delete:
-			// TODO: Delete
-			print("Deleted")
+			mappingCoordinator.deleteSelectedSongMarker()
 			break
 		default:
 			nextResponder?.keyDown(with: event)

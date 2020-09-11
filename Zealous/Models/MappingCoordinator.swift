@@ -37,6 +37,14 @@ class MappingCoordinator: LyricRangePresentationDelegate {
 		}
 	}
 	
+	func deleteSelectedSongMarker() {
+		guard let marker = selectedSongMarker else {
+			return
+		}
+		selectedSongMarker = nil
+		mapping.removeMarker(song: marker)
+	}
+	
 	func lyricRangePresentation(_ presentation: LyricRangePresentation, didSelectRange range: Range<String.Index>) {
 		selectedLyricSegment = range.lowerBound
 	}
