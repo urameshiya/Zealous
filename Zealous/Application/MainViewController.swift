@@ -45,6 +45,7 @@ private class MainView: NSView {
 		buttonStack.orientation = .vertical
 		lyricView = .init(workspace: controller.workspace)
 		songMarkerView = NSHostingView(rootView: SongMarkerList(mapping: controller.workspace.mapping,
+																seekHandler: controller.workspace.nudgeSongMarker,
 																selectedMarker: controller.mappingCoordinator.selectedSongMarkerBinding))
 		masterStack = .init(views: [lyricView, buttonStack, songMarkerView])
 		
@@ -118,6 +119,8 @@ class MainViewController: NSViewController, SongPlayerDelegate {
 		}
 		
 		player.delegate = self
+//		try! beatmapDatabase.reload()
+//		didSelect(song: musicApp.allSongs.first(where: { $0.title == "1LDK" })!)
 	}
 	
 	var player: SongPlayer = SongPlayer()
@@ -185,6 +188,7 @@ class MainViewController: NSViewController, SongPlayerDelegate {
 																		 artist: song.artistName)
 					workspace.updateMapping(mapping)
 					mainView.songMarkerView.rootView = .init(mapping: mapping,
+															 seekHandler: workspace.nudgeSongMarker,
 															 selectedMarker: mappingCoordinator.selectedSongMarkerBinding)
 					mappingCoordinator.mapping = mapping
 				} catch {

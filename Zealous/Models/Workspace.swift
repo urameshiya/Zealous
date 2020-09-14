@@ -37,4 +37,14 @@ class Workspace: ObservableObject {
 		let time = CGFloat(player.timeElapsed)
 		mapping.addSongMarker(at: time, enabled: true)
 	}
+	
+	func nudgeSongMarker(_ marker: SongMarker, by amount: CGFloat) {
+		guard let newTime = mapping.nudgeSongMarker(
+			marker,
+			by: amount,
+			absoluteLimit: 0..<CGFloat(player?.duration ?? .infinity)) else {
+				return
+		}
+		player?.seek(to: newTime)
+	}
 }

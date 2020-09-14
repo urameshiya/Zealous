@@ -100,7 +100,7 @@ extension MarkerCollection where Value: Strideable {
 			? array[position + 1].value
 			: absoluteLimit.upperBound
 		
-		if prev..<next ~= newValue {
+		guard prev..<next ~= newValue else {
 			return nil
 		}
 		

@@ -109,6 +109,7 @@ final class MarkerMapping: ObservableObject, LyricRangeProvider, SongMarkersProv
 	}
 	
 	func splitLyricRange(at stringIndex: String.Index) -> Bool {
+		objectWillChange.send()
 		lyricMarkers.splitRange(at: stringIndex)
 		evaluateMatchesIfNeeded()
 		_lyricRangesDidChange.send()
@@ -143,6 +144,19 @@ final class MarkerMapping: ObservableObject, LyricRangeProvider, SongMarkersProv
 			anchors.remove(at: anchorIndex)
 		}
 		evaluateMatchesIfNeeded()
+	}
+	
+	func nudgeSongMarker(_ marker: SongMarker, by amount: CGFloat, absoluteLimit: Range<CGFloat>) -> CGFloat? {
+		objectWillChange.send()
+		guard let newTime = songMarkers.nudgeMarker(
+			at: songMarkers.firstIndex(where: { $0.value == marker.time })!,
+			by: amount,
+			absoluteLimit: absoluteLimit) else {
+				return nil
+		}
+		_map[newTime] = _map[marker.time]
+		_map[marker.time] = nil
+		return newTime
 	}
 	
 	func getLyricRange(for marker: SongMarker) -> Range<String.Index>? {
