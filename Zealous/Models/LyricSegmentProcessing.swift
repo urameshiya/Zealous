@@ -20,6 +20,7 @@ enum LyricSegmentDefaultProcessor: LyricSegmentProcessing {
 		switch self {
 		case .splitNewline:
 			return segment.split(separator: "\n")
+				.filter { $0.trimmingCharacters(in: CharacterSet.whitespaces) != "" }
 		case .splitWhitespaceAndNewlines:
 			return segment.split { (char) -> Bool in
 				CharacterSet.whitespacesAndNewlines.contains(char.unicodeScalars.first!)

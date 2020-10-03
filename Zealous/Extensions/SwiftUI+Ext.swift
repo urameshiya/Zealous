@@ -34,6 +34,14 @@ extension View {
 	func onLocationTapGesture(location: @escaping (CGPoint) -> Void) -> some View {
 		return TapGestureWithLocation(onTapped: location, content: self)
 	}
+	
+	func onTapWithFractionPosition(location: @escaping (CGPoint) -> Void) -> some View {
+		return GeometryReader { geo in
+			TapGestureWithLocation(onTapped: { loc in
+				location(CGPoint(x: loc.x / geo.size.width, y: loc.y / geo.size.height))
+			}, content: self)
+		}
+	}
 }
 
 extension Axis {

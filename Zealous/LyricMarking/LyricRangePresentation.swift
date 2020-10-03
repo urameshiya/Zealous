@@ -184,6 +184,7 @@ final class LyricPlayAlong {
 		if let new = workspace.mapping.getLyricRange(for: marker)?.lowerBound,
 			let view = presentation.highlightViews[new] {
 			view.layer?.opacity = 1.0
+			currentHighlighted = view
 		}
 	}
 }

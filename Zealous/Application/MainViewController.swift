@@ -24,6 +24,7 @@ private class MainView: NSView {
 	let buttonStack: NSStackView
 	let masterStack: NSStackView
 	let songMarkerView: NSHostingView<SongMarkerList>
+	let seekBar: NSHostingView<AudioSeekBar>
 	
 	private var monitorToken: Any?
 	
@@ -47,7 +48,8 @@ private class MainView: NSView {
 		songMarkerView = NSHostingView(rootView: SongMarkerList(mapping: controller.workspace.mapping,
 																seekHandler: controller.workspace.nudgeSongMarker,
 																selectedMarker: controller.mappingCoordinator.selectedSongMarkerBinding))
-		masterStack = .init(views: [lyricView, buttonStack, songMarkerView])
+		seekBar = NSHostingView(rootView: AudioSeekBar(player: controller.player))
+		masterStack = .init(views: [lyricView, buttonStack, seekBar, songMarkerView])
 		
 		super.init(frame: .zero)
 		
@@ -64,6 +66,9 @@ private class MainView: NSView {
 		
 		songMarkerView.heightAnchor.constraint(equalTo: masterStack.heightAnchor).isActive = true
 		songMarkerView.widthAnchor.constraint(equalToConstant: 300).isActive = true
+		seekBar.topAnchor.constraint(equalTo: masterStack.topAnchor, constant: 50).isActive = true
+		seekBar.bottomAnchor.constraint(equalTo: masterStack.bottomAnchor, constant: -20).isActive = true
+//		seekBar.heightAnchor.constraint(equalToConstant: 200).isActive = true
 		
 		artworkView.widthAnchor.constraint(equalToConstant: 100).isActive = true
 		artworkView.heightAnchor.constraint(equalToConstant: 100).isActive = true
