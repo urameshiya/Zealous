@@ -44,6 +44,16 @@ class RangeCollection<Value>: BidirectionalCollection where Value: Comparable {
 		markers.removeMarker(at: index.markerIndex)
 	}
 	
+	private func getMarkersForRange(containing value: Value
+	) -> (start: MarkerCollection<Value>.Marker, end: MarkerCollection<Value>.Marker)? {
+		guard let
+			end = markers.firstIndex(where: { $0.value > value }),
+			end != markers.startIndex else { return nil }
+		
+		let prev = markers[end - 1]
+		return prev.isEnabled ? (prev, markers[end]) : nil
+	}
+	
 	func splitRange(at value: Value) {
 		assert(range(containing: value) != nil, "Value is within a disabled range")
 		markers.updateMarker(value, enabled: true)
@@ -51,18 +61,27 @@ class RangeCollection<Value>: BidirectionalCollection where Value: Comparable {
 	
 	func splitRange(withLowerbound lowerbound: Value,
 					into newRanges: (Range<Value>) -> [Range<Value>]) {
-		guard let oldRange = range(containing: lowerbound) else {
+		guard let (startMarker, endMarker) = getMarkersForRange(containing: lowerbound) else {
 			assertionFailure("Range with the given lowerbound does not exist")
 			return
 		}
 		
-		for range in newRanges(oldRange) {
+		let oldRange = startMarker.value..<endMarker.value
+		let ranges = newRanges(oldRange)
+		
+		for range in ranges {
 			assert(range.lowerBound >= oldRange.lowerBound, "Out of bounds")
 			assert(range.upperBound <= oldRange.upperBound, "Out of bounds")
 			markers.updateMarker(range.lowerBound, enabled: true)
 			if range.upperBound != oldRange.upperBound { // make sure it does not affect the neighbor range
 				markers.updateMarker(range.upperBound, enabled: false)
 			}
+		}
+		
+		// Consolidate so there are no two 'off' markers next to each other
+		guard let last = ranges.last else { return }
+		if last.upperBound != endMarker.value && !endMarker.isEnabled {
+			_ = markers.removeMarker(endMarker.value)
 		}
 	}
 	
