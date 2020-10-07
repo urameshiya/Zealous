@@ -28,7 +28,8 @@ struct SongMarkerList: View {
 				marker: marker,
 				lyric: marker.isEnabled ? self.getLyric(for: marker) : "Instrumental",
 				timeFormatter: self.timeFormatter,
-				seekHandler: self.seekHandler)
+				seekHandler: self.seekHandler,
+				toggleMarkerType: self.mapping.changeMarkerType)
 		}
     }
 	
@@ -46,12 +47,14 @@ private struct SongMarkerCell: View {
 	let lyric: Substring
 	let timeFormatter: DateComponentsFormatter
 	let seekHandler: FinetuneHandler
+	let toggleMarkerType: (SongMarker) -> Void
 	@State private var isHovered = false
 	
 	var body: some View {
 		HStack {
 			(marker.isEnabled ? Color.purple: Color.gray)
 				.frame(width: 10, height: 10)
+				.onTapGesture { self.toggleMarkerType(self.marker) }
 			Text(String(format: "%.2f", marker.time))
 				.frame(width: 50)
 			Text(lyric)

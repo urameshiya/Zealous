@@ -146,6 +146,12 @@ final class MarkerMapping: ObservableObject, LyricRangeProvider, SongMarkersProv
 		evaluateMatchesIfNeeded()
 	}
 	
+	/// Toggle between lyric and instrumental
+	func changeMarkerType(_ marker: SongMarker) {
+		songMarkers.updateMarker(marker.time, enabled: !marker.isEnabled)
+		evaluateMatchesIfNeeded()
+	}
+	
 	func nudgeSongMarker(_ marker: SongMarker, by amount: CGFloat, absoluteLimit: Range<CGFloat>) -> CGFloat? {
 		objectWillChange.send()
 		guard let newTime = songMarkers.nudgeMarker(
