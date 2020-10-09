@@ -8,11 +8,20 @@
 
 import SwiftUI
 
+protocol MappingLyricRangeSelector: AnyObject {
+	var selectedRange: Range<String.Index>? { get }
+}
+
+protocol MappingSongMarkerSelector: AnyObject {
+	var selectedMarker: SongMarker? { get }
+}
+
 class MappingCoordinator: LyricRangePresentationDelegate {
 	var mapping: MarkerMapping
 	var selectedSongMarker: SongMarker?
 	var selectedSongMarkerBinding: Binding<SongMarker?>!
-	var selectedLyricSegment: String.Index?
+	weak var lyricSelector: MappingLyricRangeSelector?
+	weak var songSelector: MappingSongMarkerSelector?
 	
 	init(mapping: MarkerMapping) {
 		self.mapping = mapping
@@ -22,15 +31,15 @@ class MappingCoordinator: LyricRangePresentationDelegate {
 	}
 	
 	@objc func mapCurrentlySelected() {
-		guard let lyric = selectedLyricSegment,
-			let song = selectedSongMarker,
+		guard let lyric = lyricSelector?.selectedRange,
+			let song = songSelector?.selectedMarker,
 			song.isEnabled else {
 				// TODO: Maybe throw error
-				assertionFailure()
+				print("Need to select a lyric segment and a song marker")
 				return
 		}
 		do {
-			try mapping.addAnchor(lyric: lyric, song: song.time)
+			try mapping.addAnchor(lyric: lyric.lowerBound, song: song.time)
 			print("Mapping added")
 		} catch {
 			assertionFailure()
@@ -46,6 +55,6 @@ class MappingCoordinator: LyricRangePresentationDelegate {
 	}
 	
 	func lyricRangePresentation(_ presentation: LyricRangePresentation, didSelectRange range: Range<String.Index>) {
-		selectedLyricSegment = range.lowerBound
+		
 	}
 }

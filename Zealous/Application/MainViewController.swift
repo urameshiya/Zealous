@@ -250,5 +250,6 @@ class MainViewController: NSViewController, SongPlayerDelegate {
 		let presentation = LyricRangePresentation(view: mainView.lyricView)
 		presentation.delegate = mappingCoordinator
 		mainView.lyricView.changePresentation(to: presentation)
+		mappingCoordinator.lyricSelector = presentation
 	}
 }

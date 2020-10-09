@@ -24,7 +24,7 @@ protocol LyricRangePresentationDelegate: AnyObject {
 	func lyricRangePresentation(_ presentation: LyricRangePresentation, didSelectRange: Range<String.Index>)
 }
 
-final class LyricRangePresentation: LyricMarkingViewPresentation {
+final class LyricRangePresentation: LyricMarkingViewPresentation, MappingLyricRangeSelector {
 	unowned let lyricView: LyricMarkingView
 	let colorPicker = ColorAlternator(colorPool: [#colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1), #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1), #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)])
 	let rangeContainer: NSView
@@ -100,7 +100,25 @@ final class LyricRangePresentation: LyricMarkingViewPresentation {
 		}
 	}
 	
+	private var currentlySelected: HighlightView?
+	var selectedRange: Range<String.Index>? {
+		return currentlySelected?.range
+	}
+	
 	fileprivate func highlightDidClick(_ view: HighlightView) {
+		if currentlySelected === view {
+			view.isSelected = false
+			currentlySelected = nil
+		} else {
+			currentlySelected?.isSelected = false
+			view.isSelected = true
+			currentlySelected = view
+		}
+		
+		let workspace = lyricView.workspace
+		if let marker = workspace.mapping.getSongMarker(for: view.range) {
+			workspace.player?.seek(to: marker.time)
+		}
 		delegate?.lyricRangePresentation(self, didSelectRange: view.range)
 	}
 }
@@ -125,6 +143,16 @@ class HitTestForwardingView: NSView {
 private class HighlightView: NSView {
 	unowned let presentation: LyricRangePresentation
 	let range: Range<String.Index>
+	var isSelected = false {
+		didSet {
+			// Change appearance
+			if isSelected {
+				beginBlink()
+			} else {
+				stopBlink()
+			}
+		}
+	}
 	
 	init(frame frameRect: NSRect,
 		 color: NSColor,
@@ -137,7 +165,7 @@ private class HighlightView: NSView {
 		wantsLayer = true
 		let hLayer = layer!
 		hLayer.backgroundColor = color.cgColor
-		hLayer.opacity = 0.3
+		hLayer.opacity = 0.2
 		hLayer.cornerRadius = 4
 		hLayer.masksToBounds = true
 		
@@ -152,6 +180,22 @@ private class HighlightView: NSView {
 	@objc func didClick(_ gesture: NSClickGestureRecognizer) {
 		presentation.highlightDidClick(self)
 	}
+		
+	private func beginBlink() {
+		let animation = CABasicAnimation(keyPath: "opacity")
+		animation.fromValue = 1.0
+		animation.toValue = 0.0
+		animation.duration = 0.75
+		animation.autoreverses = true
+		animation.repeatCount = .greatestFiniteMagnitude
+		
+		layer?.add(animation, forKey: "blink")
+	}
+	
+	private func stopBlink() {
+		layer?.removeAnimation(forKey: "blink")
+	}
+	
 }
 
 final class LyricPlayAlong {

@@ -171,6 +171,13 @@ final class MarkerMapping: ObservableObject, LyricRangeProvider, SongMarkersProv
 		}
 		return nil
 	}
+	
+	func getSongMarker(for lyric: Range<String.Index>) -> SongMarker? {
+		if let time = _map[lyric.lowerBound] {
+			return SongMarker(time: time, isEnabled: true)
+		}
+		return nil
+	}
 			
 	private func evaluateMatchesIfNeeded() {
 		objectWillChange.send()
