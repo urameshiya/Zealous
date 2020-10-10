@@ -10,7 +10,6 @@ import Combine
 import SwiftUI
 
 protocol LyricRangeProvider {
-	var lyricRangesDidChange: AnyPublisher<Void, Never> { get }
 	var lyric: String { get }
 	func allLyricRanges() -> [Range<String.Index>]
 }
@@ -34,6 +33,7 @@ final class LyricRangePresentation: LyricMarkingViewPresentation, MappingLyricRa
 	let lyricProvider: LyricRangeProvider
 	let songMarkersProvider: SongMarkersProvider
 	weak var delegate: LyricRangePresentationDelegate?
+	var mode: Mode = .snip
 
 	init(view: LyricMarkingView) {
 		lyricProvider = view.workspace.mapping
@@ -45,11 +45,6 @@ final class LyricRangePresentation: LyricMarkingViewPresentation, MappingLyricRa
 		hitTestView.frame = lyricView.frame
 		hitTestView.autoresizingMask = [.width, .height]
 		let workspace = view.workspace
-		
-		lyricProvider.lyricRangesDidChange.sink { [unowned self] _ in
-			self.recalculateHighlightViews()
-		}.store(in: &cancellables)
-		
 		
 		workspace.$player.sink { [unowned self] (player) in
 			guard let player = player else {
@@ -84,6 +79,7 @@ final class LyricRangePresentation: LyricMarkingViewPresentation, MappingLyricRa
 	func cleanup() {
 		rangeContainer.removeFromSuperview()
 		hitTestView.removeFromSuperview()
+		control.removeFromSuperview()
 	}
 	
 	var playAlong: LyricPlayAlong?
@@ -100,26 +96,77 @@ final class LyricRangePresentation: LyricMarkingViewPresentation, MappingLyricRa
 		}
 	}
 	
-	private var currentlySelected: HighlightView?
+	private var currentlySelected: HighlightView? {
+		didSet {
+			oldValue?.isSelected = false
+			currentlySelected?.isSelected = true
+		}
+	}
+	
 	var selectedRange: Range<String.Index>? {
 		return currentlySelected?.range
 	}
 	
-	fileprivate func highlightDidClick(_ view: HighlightView) {
-		if currentlySelected === view {
-			view.isSelected = false
-			currentlySelected = nil
-		} else {
-			currentlySelected?.isSelected = false
-			view.isSelected = true
-			currentlySelected = view
-		}
-		
+	fileprivate func highlightDidClick(_ view: HighlightView, gesture: NSClickGestureRecognizer) {
 		let workspace = lyricView.workspace
-		if let marker = workspace.mapping.getSongMarker(for: view.range) {
-			workspace.player?.seek(to: marker.time)
+		let mapping = workspace.mapping
+		
+		switch mode {
+		case .select:
+			currentlySelected = view
+			
+			if let marker = workspace.mapping.getSongMarker(for: view.range) {
+				workspace.player?.seek(to: marker.time)
+			}
+			delegate?.lyricRangePresentation(self, didSelectRange: view.range)
+		case .snip:
+			let location = gesture.location(in: lyricView.textView)
+			let nearest = lyricView.layoutManager.nearestCharacterIndex(at: location, in: lyricView.textContainer)
+			let lyric = mapping.lyric
+			
+			assert(lyric == lyricView.textView.string)
+			
+			let splitIndex = lyric.index(lyric.startIndex, offsetBy: nearest)
+			if mapping.splitLyricRange(at: splitIndex) {
+				removeHighlightView(view: view)
+				addHighlightView(over: view.range.lowerBound..<splitIndex, color: view.color)
+
+				var exclColors = [view.color]
+				if let next = mapping.allLyricRanges().first(where: { $0.lowerBound > splitIndex }) {
+					exclColors.append(highlightViews[next.lowerBound]!.color)
+				}
+				addHighlightView(over: splitIndex..<view.range.upperBound,
+								 color: colorPicker.randomColor(differentFrom: exclColors))
+			}
 		}
-		delegate?.lyricRangePresentation(self, didSelectRange: view.range)
+	}
+	
+	private func removeHighlightView(view: HighlightView) {
+		view.removeFromSuperview()
+		highlightViews[view.range.lowerBound] = nil
+	}
+	
+	private lazy var control = NSButton(title: "Select Mode", target: self, action: #selector(changeMode))
+	
+	func makeControl() -> NSView {
+		return control
+	}
+	
+	@objc func changeMode() {
+		currentlySelected = nil
+		switch mode {
+		case .select:
+			mode = .snip
+			control.title = "To Select"
+		case .snip:
+			mode = .select
+			control.title = "To Snip"
+		}
+	}
+	
+	enum Mode {
+		case select
+		case snip
 	}
 }
 
@@ -153,12 +200,14 @@ private class HighlightView: NSView {
 			}
 		}
 	}
+	var color: NSColor
 	
 	init(frame frameRect: NSRect,
 		 color: NSColor,
 		 range: Range<String.Index>,
 		 presentation: LyricRangePresentation)
 	{
+		self.color = color
 		self.presentation = presentation
 		self.range = range
 		super.init(frame: frameRect)
@@ -178,7 +227,7 @@ private class HighlightView: NSView {
 	}
 	
 	@objc func didClick(_ gesture: NSClickGestureRecognizer) {
-		presentation.highlightDidClick(self)
+		presentation.highlightDidClick(self, gesture: gesture)
 	}
 		
 	private func beginBlink() {

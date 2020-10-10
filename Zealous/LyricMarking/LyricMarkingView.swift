@@ -72,6 +72,9 @@ class LyricMarkingView: NSView {
 				// FIXME: Remove for better way of changing lyrics
 				workspace.updateLyric(textView.string)
 				workspace.mapping.splitLyricRange(withLowerBound: textView.string.startIndex, using: LyricSegmentDefaultProcessor.splitNewline)
+				presentation?.show()
+			} else {
+				presentation?.cleanup()
 			}
 		}
 	}
@@ -117,8 +120,4 @@ class LyricMarkingView: NSView {
 		self.presentation = presentation
 		presentation.show()
 	}
-}
-
-extension NSLayoutManager {
-	
 }

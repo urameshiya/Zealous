@@ -54,9 +54,12 @@ class RangeCollection<Value>: BidirectionalCollection where Value: Comparable {
 		return prev.isEnabled ? (prev, markers[end]) : nil
 	}
 	
-	func splitRange(at value: Value) {
-		assert(range(containing: value) != nil, "Value is within a disabled range")
+	func splitRange(at value: Value) -> Bool {
+		guard range(containing: value) != nil else {
+			return false
+		}
 		markers.updateMarker(value, enabled: true)
+		return true
 	}
 	
 	func splitRange(withLowerbound lowerbound: Value,

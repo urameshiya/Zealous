@@ -105,6 +105,10 @@ private class MainView: NSView {
 			editButton.keyEquivalent = ""
 		}
 	}
+	
+	func installControl(_ control: NSView) {
+		buttonStack.addArrangedSubview(control)
+	}
 }
 
 // MARK: - View Controller
@@ -251,5 +255,6 @@ class MainViewController: NSViewController, SongPlayerDelegate {
 		presentation.delegate = mappingCoordinator
 		mainView.lyricView.changePresentation(to: presentation)
 		mappingCoordinator.lyricSelector = presentation
+		mainView.installControl(presentation.makeControl())
 	}
 }

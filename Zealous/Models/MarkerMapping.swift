@@ -23,10 +23,6 @@ struct SongMarker: Comparable, Hashable {
 
 final class MarkerMapping: ObservableObject, LyricRangeProvider, SongMarkersProvider {
 	typealias SongMarkersCollection = [SongMarker]
-	private var _lyricRangesDidChange = PassthroughSubject<Void, Never>()
-	var lyricRangesDidChange: AnyPublisher<Void, Never> {
-		return _lyricRangesDidChange.eraseToAnyPublisher()
-	}
 	
 	private var _songMarkersDidChange = PassthroughSubject<Void, Never>()
 	var songMarkersDidChange: AnyPublisher<Void, Never> {
@@ -105,15 +101,15 @@ final class MarkerMapping: ObservableObject, LyricRangeProvider, SongMarkersProv
 				.map { $0.startIndex..<$0.endIndex }
 		}
 		evaluateMatchesIfNeeded()
-		_lyricRangesDidChange.send()
 	}
 	
 	func splitLyricRange(at stringIndex: String.Index) -> Bool {
 		objectWillChange.send()
-		lyricMarkers.splitRange(at: stringIndex)
-		evaluateMatchesIfNeeded()
-		_lyricRangesDidChange.send()
-		return true
+		
+		defer {
+			evaluateMatchesIfNeeded()
+		}
+		return lyricMarkers.splitRange(at: stringIndex)
 	}
 	
 	func addSongMarker(at time: CGFloat, enabled: Bool) {
@@ -131,7 +127,6 @@ final class MarkerMapping: ObservableObject, LyricRangeProvider, SongMarkersProv
 			anchors.remove(at: anchorIndex)
 		}
 		evaluateMatchesIfNeeded()
-		_lyricRangesDidChange.send()
 	}
 		
 	func removeMarker(song: SongMarker) {
