@@ -126,6 +126,7 @@ class SearchTableViewCoordinator: NSObject, NSTableViewDataSource, NSTableViewDe
 	}
 	
 	@objc func rowDoubleClicked(sender: Any?) {
+		guard tableView.clickedRow > -1 && tableView.clickedRow < search.results.count else { return }
 		selectionHandler(search.results[tableView.clickedRow])
 	}
 }
