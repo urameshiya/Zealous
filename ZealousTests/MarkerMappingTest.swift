@@ -18,9 +18,20 @@ class MarkerMappingTest: XCTestCase {
 	物足りないの　引き合いたいよ　偶然とハートしたい
 	"""
 	
-	func test() {
+	func testMapCorrectlyWhenSplit() {
 		mapping = .init(lyric: lyric)
+		mapping.splitLyricRange(withLowerBound: lyric.startIndex, using: LyricSegmentDefaultProcessor.splitNewline)
+		mapping.allLyricRanges().enumerated().forEach { (i, _) in
+			mapping.addSongMarker(at: CGFloat(i), enabled: true)
+		}
+		mapping.allLyricRanges().enumerated().forEach { (i, range) in
+			try! mapping.addAnchor(lyric: range.lowerBound, song: CGFloat(i))
+		}
 		
+		let marker1 = SongMarker(time: 1, isEnabled: true)
+		let beforeSplit = mapping.getLyricRange(for: marker1)!
 		XCTAssert(mapping.splitLyricRange(at: lyric.firstIndex(of: "第")!))
+		XCTAssert(mapping.getLyricRange(for: .init(time: 0, isEnabled: true))! == lyric.range(of: "今が一番若いの　"))
+		XCTAssert(mapping.getLyricRange(for: marker1)! == beforeSplit)
 	}
 }

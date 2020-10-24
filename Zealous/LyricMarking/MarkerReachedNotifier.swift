@@ -13,7 +13,11 @@ class MarkerReachedNotifier: Publisher {
 	
 	typealias Failure = Never
 	
-	var markers: [SongMarker] = []
+	var markers: [SongMarker] = [] {
+		didSet {
+			currentMarkerIndex = -1
+		}
+	}
 	var player: SongPlayer
 	var nextMarker: CGFloat = 0.0
 	

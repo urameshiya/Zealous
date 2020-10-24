@@ -65,6 +65,11 @@ final class MarkerMapping: ObservableObject, LyricRangeProvider, SongMarkersProv
 		self.songMarkers = songMarkers
 		self.lyric = lyric
 		
+		assert(lyricMarkers.count == songMarkers.filter({ $0.isEnabled }).count)
+		let enabledSongMarkers = songMarkers.lazy.filter { $0.isEnabled }
+		zip(lyricMarkers, enabledSongMarkers).forEach { (range, marker) in
+			try! addAnchor(lyric: range.lowerBound, song: marker.value)
+		}
 		evaluateMatchesIfNeeded()
 	}
 	
@@ -77,6 +82,7 @@ final class MarkerMapping: ObservableObject, LyricRangeProvider, SongMarkersProv
 	}
 		
 	func addAnchor(lyric: String.Index, song: CGFloat) throws {
+		assert(songMarkers.contains(where: { $0.value == song }))
 		let insertAt = try anchors.firstIndex { (maxString, maxSong) -> Bool in
 			if maxString < lyric && maxSong < song {
 				return false
@@ -115,6 +121,7 @@ final class MarkerMapping: ObservableObject, LyricRangeProvider, SongMarkersProv
 	func addSongMarker(at time: CGFloat, enabled: Bool) {
 		songMarkers.updateMarker(time, enabled: enabled)
 		evaluateMatchesIfNeeded()
+		_songMarkersDidChange.send()
 	}
 	
 	func removeMarker(lyric: String.Index) {
