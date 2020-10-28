@@ -19,7 +19,8 @@ struct SongMarkerList: View {
 		fm.zeroFormattingBehavior = .pad
 		return fm
 	}()
-	let seekHandler: FinetuneHandler
+	let finetuneHandler: FinetuneHandler
+	let seekHandler: (CGFloat) -> Void
 	@Binding var selectedMarker: SongMarker?
 	
     var body: some View {
@@ -28,7 +29,8 @@ struct SongMarkerList: View {
 				marker: marker,
 				lyric: marker.isEnabled ? self.getLyric(for: marker) : "Instrumental",
 				timeFormatter: self.timeFormatter,
-				seekHandler: self.seekHandler,
+				seekHandler: self.finetuneHandler,
+				onDoubleTap: self.seekHandler,
 				toggleMarkerType: self.mapping.changeMarkerType)
 		}
     }
@@ -47,6 +49,7 @@ private struct SongMarkerCell: View {
 	let lyric: Substring
 	let timeFormatter: DateComponentsFormatter
 	let seekHandler: FinetuneHandler
+	let onDoubleTap: (CGFloat) -> Void
 	let toggleMarkerType: (SongMarker) -> Void
 	@State private var isHovered = false
 	
@@ -72,6 +75,7 @@ private struct SongMarkerCell: View {
 			}
 			Spacer()
 		}
+		.onTapGesture(count: 2) { self.onDoubleTap(self.marker.time) }
 		.onHover { self.isHovered = $0 }
 	}
 }

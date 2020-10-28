@@ -46,7 +46,8 @@ private class MainView: NSView {
 		buttonStack.orientation = .vertical
 		lyricView = .init(workspace: controller.workspace)
 		songMarkerView = NSHostingView(rootView: SongMarkerList(mapping: controller.workspace.mapping,
-																seekHandler: controller.workspace.nudgeSongMarker,
+																finetuneHandler: controller.workspace.nudgeSongMarker,
+																seekHandler: controller.player.seek,
 																selectedMarker: controller.mappingCoordinator.selectedSongMarkerBinding))
 		seekBar = NSHostingView(rootView: AudioSeekBar(player: controller.player))
 		masterStack = .init(views: [lyricView, buttonStack, seekBar, songMarkerView])
@@ -197,7 +198,8 @@ class MainViewController: NSViewController, SongPlayerDelegate {
 																		 artist: song.artistName)
 					workspace.updateMapping(mapping)
 					mainView.songMarkerView.rootView = .init(mapping: mapping,
-															 seekHandler: workspace.nudgeSongMarker,
+															 finetuneHandler: workspace.nudgeSongMarker,
+															 seekHandler: player.seek,
 															 selectedMarker: mappingCoordinator.selectedSongMarkerBinding)
 					mappingCoordinator.mapping = mapping
 				} catch {
